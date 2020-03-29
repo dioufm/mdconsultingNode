@@ -10,15 +10,15 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dataBaseConfig.db, {
   useNewUrlParser: true
 }).then(() => {
-    console.log('Database connected sucessfully ')
-  },
+  console.log('Database connected sucessfully ')
+},
   error => {
     console.log('Could not connected to database : ' + error)
   }
 )
 
 // Set up express js port
-const studentRoute = require('./routes/student.route')
+const studentRoute = require('./routes/student.route');
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,7 +32,8 @@ app.use(express.static(path.join(__dirname, 'dist/mdconsulting')));
 
 
 // RESTful API root
-app.use('/api', studentRoute)
+app.use('/api', studentRoute);
+
 
 // PORT
 const port = process.env.PORT || 8000;

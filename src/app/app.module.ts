@@ -14,7 +14,7 @@ import { AngularMaterialModule } from './material.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 /* Angular 8 http service */
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /* Angular 8 CRUD services */
 import { ApiService } from './shared/api.service';
@@ -24,14 +24,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { SignupComponent } from './components/signup/signup.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
     HeaderComponent,
     FooterComponent,
     AppComponent,
+    HomeComponent,
+    LoginComponent,
+    SignupComponent,
+    AdminComponent,
     AddStudentComponent,
     EditStudentComponent,
     StudentsListComponent
@@ -43,9 +52,15 @@ import { FooterComponent } from './components/footer/footer.component';
     AngularMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule
   ],
-  providers: [ApiService],
+  providers:
+    [
+      { provide: ApiService },
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

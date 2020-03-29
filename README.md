@@ -9,3 +9,11 @@ Step by step article on [Angular 8 MEAN Stack Tutorial – Build CRUD App with A
   - `cd backend` to enter into the backend folder
   - `nodemon server` to start the nodemon server
   - `mongod` to start the mongoDB shell
+
+  
+  
+  cd backend
+  node app.js
+  
+    this.userForm.controls.user_name = "mamad.diouf@gmail.com";
+    this.userForm.controls.user_password.value = "password";

@@ -1,5 +1,8 @@
 import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
+import { User } from './shared/user';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +11,20 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 
 export class AppComponent {
+
+  currentUser: User;
   opened = true;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
 
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+
+  }
+
   ngOnInit() {
-    /*
+
     console.log(window.innerWidth)
+    /*
     if (window.innerWidth < 768) {
       this.sidenav.fixedTopGap = 55;
       this.opened = false;
@@ -21,11 +32,13 @@ export class AppComponent {
       this.sidenav.fixedTopGap = 55;
       this.opened = true;
     }
-    */
+  */
+
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    /*
     if (event.target.innerWidth < 768) {
       this.sidenav.fixedTopGap = 55;
       this.opened = false;
@@ -33,6 +46,7 @@ export class AppComponent {
       this.sidenav.fixedTopGap = 55
       this.opened = true;
     }
+    */
   }
 
   isBiggerScreen() {
@@ -42,5 +56,10 @@ export class AppComponent {
     } else {
       return false;
     }
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

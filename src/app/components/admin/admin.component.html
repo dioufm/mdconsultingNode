@@ -1,0 +1,63 @@
+<div class="section section-components" *ngIf="userId == null">
+
+  <div class="container">
+    <h3 class="h4 text-success font-weight-bold mb-4">Tabs</h3>
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="nav-wrapper">
+          <nav mat-tab-nav-bar [backgroundColor]="background">
+            <a mat-tab-link *ngFor="let link of links" (click)="activeLink = link" [active]="activeLink == link">
+              {{link}} </a>
+          </nav>
+        </div>
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel"
+                aria-labelledby="tabs-icons-text-1-tab">
+                <p class="description">
+                  <table *ngIf="activeLink == 'users'">
+                    <thead>
+                      <tr>
+                        <th>#ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of users">
+                        <th>{{ item._id }}</th>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>
+                          <button (click)="viewUser(item._id)" type="button">Edit</button>
+                          <button (click)="removeUser(item._id)" type="button">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0">
+
+        <div class="nav-wrapper">
+          Last infos
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-components" *ngIf="userId != null">
+
+  <div class="container">
+    <h3 class="h4 text-success font-weight-bold mb-4">Edit user</h3>
+
+  </div>
+</div>

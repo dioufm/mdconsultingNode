@@ -3,6 +3,7 @@ export const environment = {
   application: {
     name: 'DmwebSolution',
     angular: 'Angular 8.2.14',
-    bootstrap: 'Bootstrap 4.3.1',
-  }
+    bootstrap: 'Bootstrap 4.3.1'
+  },
+  apiUrl: 'api'
 };

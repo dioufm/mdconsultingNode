@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
 
   form: any = {};
   report: any;
+  currentUser: any;
 
   public myreg = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
 
@@ -40,11 +42,20 @@ export class HomeComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
+
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
+
   constructor(
     private meta: Meta,
     private titleService: Title,
     //private reportService: ReportService,
-    private router: Router) {
+    private router: Router,
+    private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {

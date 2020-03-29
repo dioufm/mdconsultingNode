@@ -3,6 +3,7 @@ import { Student } from './student';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,15 @@ export class ApiService {
   DeleteStudent(id): Observable<any> {
     var API_URL = `${this.endpoint}/delete-student/${id}`;
     return this.http.delete(API_URL)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
+  // user login
+  login(data: User): Observable<any> {
+    let API_URL = `${this.endpoint}/login`;
+    return this.http.post(API_URL, data)
       .pipe(
         catchError(this.errorMgmt)
       )

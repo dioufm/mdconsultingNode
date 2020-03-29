@@ -1,3 +1,3 @@
 module.exports = {
-  db: 'mongodb+srv://mdconsulting:mdconsulting@cluster0-stajd.mongodb.net/test?retryWrites=true&w=majority'
+  db: 'mongodb+srv://mdconsulting:mdconsulting@cluster0-sefgi.mongodb.net/test?retryWrites=true&w=majority'
 };
