@@ -2,7 +2,7 @@
 <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
     <div class="container">
         <a class="navbar-brand mr-lg-5" href="../index.html">
-            <img src="../assets/img/brand/white.png">
+            <img src="../assets/img/brand/blue.png">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
             aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
                         <div class="dropdown-menu-inner">
                             <a href="https://demos.creative-tim.com/argon-design-system/docs/getting-started/overview.html"
                                 class="media d-flex align-items-center">
-                                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+                                <div class="icon icon-shape bg-gradient-primary rounded-circle">
                                     <i class="ni ni-spaceship"></i>
                                 </div>
                                 <div class="media-body ml-3">
@@ -46,7 +46,7 @@
                             </a>
                             <a href="https://demos.creative-tim.com/argon-design-system/docs/foundation/colors.html"
                                 class="media d-flex align-items-center">
-                                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+                                <div class="icon icon-shape bg-gradient-success rounded-circle">
                                     <i class="ni ni-palette"></i>
                                 </div>
                                 <div class="media-body ml-3">
@@ -57,7 +57,7 @@
                             </a>
                             <a href="https://demos.creative-tim.com/argon-design-system/docs/components/alerts.html"
                                 class="media d-flex align-items-center">
-                                <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+                                <div class="icon icon-shape bg-gradient-warning rounded-circle">
                                     <i class="ni ni-ui-04"></i>
                                 </div>
                                 <div class="media-body ml-3">
@@ -83,43 +83,35 @@
                 </li>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" routerLink="login" data-toggle="tooltip"
-                        title="Login or register">
 
-                        <span *ngIf="currentUser==null" class="nav-link-inner--text d-lg-none">Log In/Sign In </span>
+                <li class="nav-item d-none d-lg-block ml-lg-4">
+                    <a routerLink="createproduct" class="btn btn-neutral btn-icon">
+                        <span class="nav-link-inner--text">Publier une annonce</span>
                     </a>
                 </li>
+
                 <li class="nav-item d-none d-lg-block ml-lg-4" *ngIf="currentUser==null">
                     <a routerLink="login" class="btn btn-neutral btn-icon">
                         <span class="btn-inner--icon">
                             <i class="fa fa-user"></i>
                         </span>
-                        <span class="nav-link-inner--text">Log In/Sign In</span>
+                        <span class="nav-link-inner--text">Compte</span>
                     </a>
                 </li>
-                <li class="nav-item d-none d-lg-block ml-lg-4" *ngIf="currentUser!=null">
-                    <a routerLink="login" class="btn btn-neutral btn-icon">
-                        <span class="btn-inner--icon">
-                            <i class="fa fa-user"></i>
-                        </span>
+            </ul>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center" *ngIf="currentUser!=null">
+                <li class="nav-item dropdown">
+                    <a routerLink="login" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                        <i class="fa fa-user"></i>
                         <span class="nav-link-inner--text">{{currentUser.username}}</span>
                     </a>
+                    <div class="dropdown-menu">
+                        <a (click)="logout()" href="#" class="dropdown-item">Se deconnecter</a>
+                        <a routerLink="profil" class="dropdown-item">Profile</a>
+                        <a routerLink="admin" class="dropdown-item">Tableau de bord</a>
+
+                    </div>
                 </li>
-                <li class="nav-item" *ngIf="isAdmin">
-                    <a class="nav-link" routerLink="admin">
-                        <span class="nav-link-inner--text">Admin Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item" *ngIf="currentUser!=null">
-                    <a (click)="logout()" class="nav-link" routerLink="login">
-                        <span class="nav-link-inner--text">Log out</span>
-                    </a>
-                </li>
-
-
-
-
             </ul>
         </div>
     </div>

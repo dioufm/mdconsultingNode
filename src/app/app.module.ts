@@ -30,7 +30,38 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { SignupComponent } from './components/signup/signup.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CreateProductComponent } from './components/product/createproduct.component';
+import { SubProductComponent } from './components/product/subproduct/subproduct.component';
 
+import { ModalModule, BsModalService, BsModalRef, BsLocaleService } from 'ngx-bootstrap';
+import { FileSelectDirective } from 'ng2-file-upload'
+
+import { MatIconModule } from "@angular/material/icon";
+
+
+import { SocialLoginModule } from 'angularx-social-login';
+import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('528961187921-ld24b25466u4t2lacn9r35asg000lfis.apps.googleusercontent.com')
+  },
+  // {
+  //   id: FacebookLoginProvider.PROVIDER_ID,
+  //   provider: new FacebookLoginProvider('561602290896109')
+  // },
+  // {
+  //   id: AppleLoginProvider.PROVIDER_ID,
+  //   provider: new AppleLoginProvider("78iqy5cu2e1fgr")
+  // }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -41,9 +72,14 @@ import { MatTabsModule } from '@angular/material/tabs';
     LoginComponent,
     SignupComponent,
     AdminComponent,
+    CreateProductComponent,
+    SubProductComponent,
+
     AddStudentComponent,
     EditStudentComponent,
-    StudentsListComponent
+    StudentsListComponent,
+
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -53,13 +89,23 @@ import { MatTabsModule } from '@angular/material/tabs';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule,
+    ModalModule.forRoot(),
+    MatIconModule
   ],
+  entryComponents: [SubProductComponent],
   providers:
     [
       { provide: ApiService },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+      {
+        provide: AuthServiceConfig,
+        useFactory: provideConfig
+      },
+      BsModalService,
+      BsModalRef
     ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

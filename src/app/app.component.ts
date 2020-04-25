@@ -3,6 +3,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { User } from './shared/user';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,31 @@ export class AppComponent {
   opened = true;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+
+    this.matIconRegistry.addSvgIcon(
+      "house_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/house_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "appart_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/appart_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "terrain_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/terrain_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "autre_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/autre_icon.svg")
+    );
+
+
 
   }
 

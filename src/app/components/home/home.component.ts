@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-//import { environment } from '../../../../environments/environment';
-//import { ReportService } from 'src/app/services/report/report.service';
 import { Router } from '@angular/router';
-//import { CommonService } from 'src/app/services/common/common.service';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -36,7 +33,6 @@ export class HomeComponent implements OnInit {
 
   emailFormControl = new FormControl('', [
     Validators.required,
-    //Validators.email,
     Validators.pattern(this.myreg)
   ]);
 
@@ -52,17 +48,16 @@ export class HomeComponent implements OnInit {
   constructor(
     private meta: Meta,
     private titleService: Title,
-    //private reportService: ReportService,
     private router: Router,
     private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
-    this.titleService.setTitle('angular.ganatan : Une application Progressive WebApp développée avec Angular');
+    this.titleService.setTitle('Hello Affrica : Une application Progressive WebApp développée avec Angular');
     this.meta.addTag({
-      name: 'angular-webapp',
-      content: 'danny ganatan'
+      name: 'Hello Affrica',
+      content: 'Hello Affrica'
     });
     this.meta.updateTag(
       {
@@ -71,30 +66,10 @@ export class HomeComponent implements OnInit {
           ' Elle applique le Routing, le Lazy loading, le Server side rendering et les Progressive Web App (PWA)'
       });
 
-    //iniot form home page
-    this.report = {};
+
+
+
   }
 
-  startStudyWebsite() {
-    /*
-    this.reportService.getReport(this.form.url)
-      .subscribe(
-        data => {
-          if (data != null) {
-            console.log(data);
-            this.report = data;
-            this.router.navigate(['/report', { url: this.form.url }]);
-            //this.commonService.setReport(this.report);
-            //this.report.dateReportString = new DatePipe('fr-FR').transform(this.report.dateReport, 'long');
-            //this.token.saveReport(JSON.stringify(this.report));
-          }
-        },
-        error => console.log('ERROR: ' + error));
-  }*/
-    this.router.navigate(['/report', { url: this.form.url }]);
-  }
 
 }
-
-
-

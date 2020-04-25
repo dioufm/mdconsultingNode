@@ -1,0 +1,37 @@
+[
+    {
+        "code": "SEN",
+        "name": "Senegal",
+        "level": 1,
+        "color": "green",
+        "icon": "icon-senegal",
+        "regions": [
+            {
+                "code": "DKR",
+                "name": "Dakar",
+                "departements": [
+                    {
+                        "code": "DKR",
+                        "name": "Dakar",
+                        "villes": [
+                            {
+                                "code": "GTFC",
+                                "name": "GUEULE TAPEE FASS COLOBANE"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "GDW",
+                        "name": "Guédiawaye",
+                        "villes": [
+                            {
+                                "code": "GLS",
+                                "name": "GOLF SUD"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

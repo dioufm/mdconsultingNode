@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-//import { environment } from '../../../../environments/environment';
-//import { ReportService } from 'src/app/services/report/report.service';
+
 import { Router } from '@angular/router';
 //import { CommonService } from 'src/app/services/common/common.service';
 import { environment } from 'src/environments/environment';
@@ -11,6 +10,9 @@ import { ApiService } from 'src/app/shared/api.service';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonService } from 'src/app/shared/common.service';
+import { ProductService } from 'src/app/services/product.service';
+import { BsModalService } from 'ngx-bootstrap';
+import { SubProductComponent } from './subproduct/subproduct.component';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -22,11 +24,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-createproduct',
+  templateUrl: './createproduct.component.html',
+  styleUrls: ['./createproduct.component.css']
 })
-export class SignupComponent implements OnInit {
+export class CreateProductComponent implements OnInit {
   userForm: FormGroup;
 
   loading = false;
@@ -35,28 +37,38 @@ export class SignupComponent implements OnInit {
   error = '';
 
   matcher = new MyErrorStateMatcher();
-
   message = '';
+
+  categories = [];
+
+  bsModalRef;
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private commonService: CommonService,
-    public fb: FormBuilder) {
+    private productService: ProductService,
+    private fb: FormBuilder,
+    private modalService: BsModalService) {
 
-    // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+
   }
 
   ngOnInit() {
     this.userForm = this.fb.group({
       user_email: ['', [Validators.required]],
-      user_password: ['', [Validators.required]],
-      user_name: ['', [Validators.required]]
-    })
+      user_password: ['', [Validators.required]]
+    });
 
+    this.productService.getAllCategories()
+      .subscribe(
+        data => {
+          //this.categories = data;
+          this.categories = data;
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
 
   }
 
@@ -64,21 +76,26 @@ export class SignupComponent implements OnInit {
   get f() { return this.userForm.controls; }
 
   /* Submit book */
-  submitsignupForm() {
+  submitcreateproductForm() {
     if (this.userForm.valid) {
-      this.authenticationService.signup(this.f.user_name.value, this.f.user_email.value, this.f.user_password.value)
+      /*
+      this.authenticationService.createproduct(this.f.user_email.value, this.f.user_password.value)
         .pipe(first())
         .subscribe(
           data => {
-            this.message = data;
-            this.commonService.setSubscribeEvent(true);
-            this.router.navigateByUrl('/login');
+            this.commonService.setcreateproductEvent(true);
+            this.router.navigateByUrl('/');
           },
           error => {
+            this.message = error;
             this.error = error;
             this.loading = false;
           });
-
+      /*
+      this.authenticationService.createproduct(this.userForm.value).subscribe(res => {
+        this.ngZone.run(() => this.router.navigateByUrl('/'))
+      });
+      */
     }
   }
 
@@ -86,10 +103,14 @@ export class SignupComponent implements OnInit {
     return this.userForm.controls[controlName].hasError(errorName);
   }
 
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/signup']);
+  showCategorieModal(categorie) {
+    const initialState = {
+      categorie: categorie,
+    };
+    this.bsModalRef = this.modalService.show(SubProductComponent, { class: 'modal-lg', ignoreBackdropClick: true, initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
+
 
 
 }
