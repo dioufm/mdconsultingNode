@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
@@ -14,6 +14,9 @@ import { CommonService } from 'src/app/shared/common.service';
 import { AuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, } from 'angularx-social-login';
+import { User } from 'src/app/shared/user';
+import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -31,6 +34,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  @Input() isCreatingProduct: boolean;
+
   userForm: FormGroup;
 
   loading = false;
@@ -46,13 +52,16 @@ export class LoginComponent implements OnInit {
 
   user: SocialUser;
 
+  subscription: Subscription;
+
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
     private commonService: CommonService,
     private fb: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private toastr: ToastrService) {
 
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -72,11 +81,62 @@ export class LoginComponent implements OnInit {
     this.commonService.getSubscribeEvent()
       .subscribe(evtSubscribe => {
         if (evtSubscribe) {
-          this.message = 'Congratulation subscribe succcesfull login now';
+          this.commonService.setLoginEvent(true);
+          this.router.navigateByUrl('/');
+          this.authService.authState.subscribe().unsubscribe();
           this.login = true;
           this.signup = false;
         }
       });
+
+    this.authService.authState.subscribe((user) => {
+      if (user != null) {
+        this.authService.authState.subscribe().unsubscribe();
+        //Check if login
+        this.authenticationService.login(user.email, user.id)
+          .pipe(first())
+          .subscribe(
+            data => {
+              this.commonService.setLoginEvent(true);
+              this.authService.authState.subscribe().unsubscribe();
+              if (!this.isCreatingProduct) {
+                this.router.navigateByUrl('/');
+              } else {
+                this.router.navigateByUrl('/createproduct');
+              }
+
+            },
+            error => {
+              this.authService.authState.subscribe().unsubscribe();
+              let userModel = new User();
+              userModel.username = user.firstName;
+              userModel.password = user.id;
+              userModel.email = user.email;
+              this.authenticationService.loginSocial(userModel)
+                .pipe(first())
+                .subscribe(
+                  data => {
+                    this.authService.authState.subscribe().unsubscribe();
+                    this.commonService.setLoginEvent(true);
+                    if (!this.isCreatingProduct) {
+                      this.commonService.setSubscribeEvent(true);
+                      this.router.navigateByUrl('/');
+                    } else {
+                      this.commonService.setLoginEventCreatingProduct(true);
+                      this.router.navigateByUrl('/createproduct');
+                    }
+                  },
+                  error => {
+                    this.authService.authState.subscribe().unsubscribe();
+                    this.router.navigateByUrl('/login');
+                    this.message = error;
+                    this.error = error;
+                    this.loading = false;
+                  });
+            });
+      }
+    });
+
 
   }
 
@@ -90,8 +150,15 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           data => {
-            this.commonService.setLoginEvent(true);
-            this.router.navigateByUrl('/');
+
+            if (!this.isCreatingProduct) {
+              this.commonService.setLoginEvent(true);
+              this.router.navigateByUrl('/');
+            } else {
+              this.commonService.setLoginEventCreatingProduct(true);
+              this.router.navigateByUrl('/createproduct');
+            }
+            this.toastr.success('Vous êtes connecté.');
           },
           error => {
             this.message = error;
@@ -111,6 +178,7 @@ export class LoginComponent implements OnInit {
             this.message = data;
             this.commonService.setSubscribeEvent(true);
             this.router.navigateByUrl('/login');
+            this.toastr.success('Merci pour votre inscription.');
           },
           error => {
             this.message = error;
@@ -145,18 +213,11 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => console.log(x));
   }
 
-  signInWithLinkedIn(): void {
-    //  this.authService.signIn(AppleLoginProvider.PROVIDER_ID).then(x => console.log(x));
-  }
 
   signOut(): void {
     this.authService.signOut();
   }
 
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-  }
 
 
 }

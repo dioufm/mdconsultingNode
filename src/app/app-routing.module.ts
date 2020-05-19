@@ -8,10 +8,12 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { CreateProductComponent } from './components/product/createproduct.component';
+import { ViewProductComponent } from './components/home/view-product/view-product.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'app-home' },
   { path: 'app-home', component: HomeComponent },
+  { path: 'product/:productId', component: ViewProductComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'admin', component: AdminComponent },

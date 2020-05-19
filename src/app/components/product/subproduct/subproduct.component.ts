@@ -8,6 +8,9 @@ import { BsModalRef } from 'ngx-bootstrap';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProductService } from '../../../services/product.service';
 import { FileUploader } from 'ng2-file-upload';
+import { User } from '../../../shared/user';
+import { Product } from '../../../shared/product';
+import { CommonService } from '../../../shared/common.service';
 
 
 
@@ -50,13 +53,18 @@ export class SubProductComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
 
+  currentUser: User;
+
+  product: Product;
 
 
   constructor(
     private authenticationService: AuthenticationService,
+
     private router: Router,
     private productService: ProductService,
     private fb: FormBuilder,
+    private commonService: CommonService,
     public bsModalRef: BsModalRef) {
 
 
@@ -65,23 +73,25 @@ export class SubProductComponent implements OnInit {
   ngOnInit() {
     this.subProductForm = this.fb.group({
       typeOffre: ['VENTE', [Validators.required]],
+      categorieProduct: ['VEH', []],
+      subCategorieProduct: ['VTI', []],
       typeProduct: ['MAI', []],
-      surface: ['', [Validators.required]],
-      nbPieces: ['', [Validators.required]],
-      titre: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      prix: ['', [Validators.required]],
-      region: ['', [Validators.required]],
-      departement: ['', [Validators.required]],
-      ville: ['', [Validators.required]]
+      surface: ['200', [Validators.required]],
+      nbPieces: ['5', [Validators.required]],
+      titre: ['VENTE IMMOBILIER', [Validators.required]],
+      description: ['DESCRIPTION VENTE IMMOBILIER', [Validators.required]],
+      prix: ['100000', [Validators.required]],
+      region: ['DKR', [Validators.required]],
+      departement: ['GDW', [Validators.required]],
+      ville: ['GLS', [Validators.required]]
 
     }, {});
     this.stepMessage = 'Choisissez la sous catégorie';
 
-    this.stepSelectSubCategorie = false;
+    this.stepSelectSubCategorie = true;
     this.stepCreateProduct = false;
     this.stepAddPicture = false;
-    this.stepLogin = true;
+    this.stepLogin = false;
 
     this.productService.getCountry()
       .subscribe(
@@ -94,7 +104,15 @@ export class SubProductComponent implements OnInit {
           this.loading = false;
         });
 
-    this.uploader = this.productService.addPicture();
+    this.currentUser = this.authenticationService.currentUserValue;
+
+    this.commonService.getLoginEventCreatingProduct()
+      .subscribe(loginCreateProductEvent => {
+        if (loginCreateProductEvent) {
+          this.currentUser = this.authenticationService.currentUserValue;
+          this.gotoLogin();
+        }
+      });
   }
 
   fileProgress(fileInput: any) {
@@ -192,16 +210,29 @@ export class SubProductComponent implements OnInit {
   public gotoLogin() {
 
     // stop here if form is invalid
-    if (this.subProductForm.invalid) {
+    if (this.subProductForm.valid) {
+      if (this.currentUser != null) {
+
+        this.validateCreateProduct(this.currentUser);
+
+        this.stepLogin = false;
+        this.stepAddPicture = true;
+        this.stepSelectSubCategorie = false;
+        this.stepCreateProduct = false;
+        this.stepMessage = 'Ajouter des photos?';
+      } else {
+        this.stepLogin = true;
+        this.stepSelectSubCategorie = false;
+        this.stepCreateProduct = false;
+        this.stepAddPicture = false;
+        this.stepMessage = 'Conenxion';
+      }
+    } else {
       return;
     }
-    this.stepLogin = true;
-    this.stepSelectSubCategorie = false;
-    this.stepCreateProduct = false;
-    this.stepAddPicture = false;
-    this.stepMessage = 'Ajouter des photos?';
 
   }
+
 
   public gotoAddPicture() {
 
@@ -229,8 +260,6 @@ export class SubProductComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status, response);
-      alert('File uploaded successfully');
     };
   }
 
@@ -262,6 +291,32 @@ export class SubProductComponent implements OnInit {
   selectVille(ville) {
     this.ville = ville
   }
+
+  public validateCreateProduct(user) {
+    if (this.subProductForm.valid) {
+      //create a product
+      this.product = new Product(this.subProductForm.value);
+      this.productService.createProduct(this.product, user.id)
+        .subscribe(
+          data => {
+            this.message = data;
+
+            if (data.product._id != null) {
+              this.uploader = this.productService.addPicture(data.product._id);
+            }
+          },
+          error => {
+            this.message = error;
+            this.error = error;
+            this.loading = false;
+          });
+
+    } else {
+      return;
+    }
+
+  }
+
 
   public close() {
     this.bsModalRef.hide();

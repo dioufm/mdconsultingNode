@@ -11,7 +11,9 @@ const User = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Role"
       }
-    ]
+    ],
+    dateCreation: { type: Date, default: Date.now },
+    lastConnexionDate: { type: Date, default: Date.now },
   })
 );
 

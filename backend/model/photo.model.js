@@ -1,13 +1,23 @@
-var mongoose = require('mongoose');
+/**
+ * Created by theotheu on 02-11-13.
+ */
 
-var Schema = mongoose.Schema;
+/**
+ * Module dependencies.
+ */
+const mongoose = require("mongoose");
 
-var photoSchema = new Schema({
+const Photo = mongoose.model(
+  "Photo",
+  /* Schema definitions */
+  new mongoose.Schema({                                // <--- nested document (not sub document)
+    size: { type: Number },
+    filename: { type: String },
+    data: { type: Buffer },
+    contentType: { type: String },
+    modificationDate: { type: Date, "default": Date.now }
+  })
+);
 
-  path: { type: String },
+module.exports = Photo;
 
-  caption: { type: String }
-
-});
-
-module.exports = mongoose.model('Photos', photoSchema);

@@ -5,15 +5,8 @@ import { environment } from 'src/environments/environment';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ProductService } from 'src/app/services/product.service';
 
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'app-home',
@@ -29,15 +22,10 @@ export class HomeComponent implements OnInit {
   report: any;
   currentUser: any;
 
-  public myreg = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
+  products = [];
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(this.myreg)
-  ]);
-
-  matcher = new MyErrorStateMatcher();
-
+  loading = false;
+  error = null;
 
 
   logout() {
@@ -49,7 +37,8 @@ export class HomeComponent implements OnInit {
     private meta: Meta,
     private titleService: Title,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private productService: ProductService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -66,10 +55,16 @@ export class HomeComponent implements OnInit {
           ' Elle applique le Routing, le Lazy loading, le Server side rendering et les Progressive Web App (PWA)'
       });
 
+    this.products = [];
 
-
-
+    this.productService.getProducts()
+      .subscribe(
+        data => {
+          this.products = data;
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
   }
-
-
 }

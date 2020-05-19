@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../shared/user';
 import { environment } from 'src/environments/environment';
+import { User } from '../shared/user';
 
 
 
@@ -41,6 +41,20 @@ export class AuthenticationService {
             .pipe(map(message => {
                 return message;
             }));
+    }
+
+    loginSocial(user) {
+
+        let username = user.username;
+        let email = user.email;
+        let password = user.password;
+        return this.http.post<any>(`${environment.apiUrl}/auth/signup`, { username, email, password })
+            .pipe(map(message => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                //this.currentUserSubject.next(userAut);
+                return user;
+            }));
+
     }
 
     logout() {

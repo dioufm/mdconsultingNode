@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/shared/user';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/common.service';
+import { AuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ export class HeaderComponent {
   isUser = false;
   isModerateur = false;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private commonService: CommonService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService, private commonService: CommonService, private authService: AuthService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.initRoleUser();
     localStorage.setItem('defaultCountryCode', 'SEN');
@@ -40,9 +41,11 @@ export class HeaderComponent {
 
   }
 
+
+
   logout() {
+    this.authService.signOut();
     this.authenticationService.logout();
-    this.initUser();
     this.router.navigate(['/login']);
   }
 

@@ -176,19 +176,23 @@
     </div>
 
     <div *ngIf="stepLogin">
-      <app-login></app-login>
+      <app-login isCreatingProduct=true></app-login>
     </div>
 
 
     <!-- START adding picture-->
     <div *ngIf="stepAddPicture">
-      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" (change)="fileProgress($event)" />
+      <input type="file" name="file" ng2FileSelect [uploader]="uploader" (change)="fileProgress($event)" />
       <div class="image-preview mb-3" *ngIf="previewUrl">
         <img [src]="previewUrl" height="300" />
       </div>
-      <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+      <button type="button" class="btn btn-default btn-sm" (click)="uploader.uploadAll()"
         [disabled]="!uploader.getNotUploadedItems().length">
-        Upload an Image
+        Ajouter cette photo
+      </button>
+      <button type="button" class="btn btn-warning btn-sm" (click)="uploader.uploadAll()"
+        [disabled]="!uploader.getNotUploadedItems().length">
+        Supprimer
       </button>
     </div>
 
@@ -197,6 +201,14 @@
   <div class="modal-footer" *ngIf="stepCreateProduct">
     <button class="btn btn-default" *ngIf="stepCreateProduct" type="button" [disabled]="subCategorieSelected==null"
       (click)="gotoSelectSubcategories()">Précedent</button>
-    <button class="btn btn-primary" type="button" [disabled]="subCategorieSelected==null" (click)="gotoLogin()">Ajoutez
-      des photos</button>
+    <button *ngIf="stepCreateProduct" class="btn btn-primary" type="button" [disabled]="subCategorieSelected==null"
+      (click)="gotoLogin()">Suivant</button>
+  </div>
+
+  <div class="modal-footer" *ngIf="stepAddPicture">
+    <button class="btn btn-default" type="button" [disabled]="subCategorieSelected==null"
+      (click)="gotoSelectSubcategories()">Précedent</button>
+
+    <button class="btn btn-primary" type="button" [disabled]="subCategorieSelected==null"
+      (click)="validateCreateProduct()">Valider</button>
   </div>

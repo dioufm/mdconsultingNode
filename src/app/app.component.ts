@@ -5,6 +5,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { User } from './shared/user';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,15 @@ export class AppComponent {
   opened = true;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
 
+  @ViewChild(ToastContainerDirective, { static: true }) toastContainer: ToastContainerDirective;
+
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer) {
+    private domSanitizer: DomSanitizer,
+    private toastrService: ToastrService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 
     this.matIconRegistry.addSvgIcon(
@@ -59,6 +64,8 @@ export class AppComponent {
     }
   */
 
+    this.toastrService.overlayContainer = this.toastContainer;
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -81,10 +88,5 @@ export class AppComponent {
     } else {
       return false;
     }
-  }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
   }
 }

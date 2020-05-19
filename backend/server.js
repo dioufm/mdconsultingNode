@@ -13,6 +13,7 @@ const client = require('twilio')(accountSid, authToken);
 
 const multer = require('multer');
 const GridFsStorage = require("multer-gridfs-storage");
+const MongoGridFSStore = require('mongo-gridfs-storage');
 
 const app = express();
 
@@ -32,10 +33,6 @@ const db = require("./model");
 const Role = db.role;
 const Categorie = db.categorie;
 const Country = db.country;
-const Photo = db.photo;
-
-
-const SubCategorie = db.subcategorie;
 
 
 db.mongoose
@@ -54,112 +51,20 @@ db.mongoose
     process.exit();
   });
 
-
-
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
-
-const DIR = "./uploads";
-
-let storagefile = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, DIR);
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now() + '.png');
-  }
-});
-
-// Storage
-const storageold = new GridFsStorage({
-  url: db,
-  file: (req, file) => {
-    if (file.mimetype === 'image/jpeg') {
-      return {
-        bucketName: 'photos'
-      };
-    } else {
-      return null;
-    }
-  }
-});
-
-const storage = new GridFsStorage({
-  url: dbConfig.db,
-  file: (res, file) => {
-    //1. Load the mongoose driver
-    var mongooseDrv = require("mongoose");
-    //2. Connect to MongoDB and its database
-    mongooseDrv.connect(dbConfig.db);
-    //3. The Connection Object
-    var connection = mongooseDrv.connection;
-    if (connection !== "undefined") {
-      console.log(connection.readyState.toString());
-      //4. The Path object
-      var path = require("path");
-      //5. The grid-stream
-      var grid = require("gridfs-stream");
-      //6. The File-System module
-      //7.Read the video/image file from the videoread folder
-      var filesrc = path.join(__dirname, "./uploads/" + file.originalname);
-      //8. Establish connection between Mongo and GridFS
-      grid.mongo = mongooseDrv.mongo;
-      //9.Open the connection and write file
-      connection.once("open", () => {
-        try {
-          console.log("Connection Open");
-          var gridfs = grid(connection.db);
-          if (gridfs) {
-            //9a. create a stream, this will be
-            //used to store file in database
-            var streamwrite = gridfs.createWriteStream({
-              //the file will be stored with the name
-              filename: file.originalname
-            }).catch(err => {
-              console.error("Connection error", err);
-              res.status(200).send({
-                success: true
-              });
-            });;
-            //9b. create a readstream to read the file
-            //from the filestored folder
-            //and pipe into the database
-            fs.createReadStream(filesrc).pipe(streamwrite);
-            //9c. Complete the write operation
-            streamwrite.on("close", function (file) {
-              console.log("Write written successfully in database");
-
-            });
-          } else {
-            console.log("Sorry No Grid FS Object");
-          }
-
-        } catch (err) {
-          console.log(err);
-          db.fs.files.find({ filename: file.originalname }).sort({ uploadDate: 1 })
-        }
-
-      });
-    } else {
-      console.log('Sorry not connected');
-    }
-  }
-});
-
-
-let upload = multer({ storage: storage });
-
 
 
 // routes
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/product.routes")(app);
+require("./routes/upload.routes")(app);
 
 // POST File
-app.post('/api/upload', upload.single('image'));
+//app.post('/api/upload', upload.single('image'));
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -178,8 +83,6 @@ client.messages.create({
 }).then(message => console.log(message.sid));
 
 */
-
-
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {

@@ -15,6 +15,8 @@ export class CommonService {
 
     private loginEvent = new Subject();
 
+    private loginEventCreatingProduct = new Subject();
+
     getSubscribeEvent(): Observable<any> {
         return this.subscribeEvent.asObservable();
     }
@@ -31,6 +33,12 @@ export class CommonService {
         this.loginEvent.next(loginEvent);
     }
 
+    getLoginEventCreatingProduct(): Observable<any> {
+        return this.loginEventCreatingProduct.asObservable();
+    }
 
+    setLoginEventCreatingProduct(loginEventCreatingProduct) {
+        this.loginEventCreatingProduct.next(loginEventCreatingProduct);
+    }
 
 }

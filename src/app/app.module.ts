@@ -42,25 +42,34 @@ import { MatIconModule } from "@angular/material/icon";
 
 import { SocialLoginModule } from 'angularx-social-login';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { ViewProductComponent } from './components/home/view-product/view-product.component';
+
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
+
+import { ToastrModule } from 'ngx-toastr';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+import { DateAgoPipe } from './pipe/date-ago.pipe';
+
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 
-const config = new AuthServiceConfig([
+const CONFIG = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('528961187921-ld24b25466u4t2lacn9r35asg000lfis.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('815952117538-290ne08t0phn8tj95l1n6p0eptncht0p.apps.googleusercontent.com')
   },
-  // {
-  //   id: FacebookLoginProvider.PROVIDER_ID,
-  //   provider: new FacebookLoginProvider('561602290896109')
-  // },
-  // {
-  //   id: AppleLoginProvider.PROVIDER_ID,
-  //   provider: new AppleLoginProvider("78iqy5cu2e1fgr")
-  // }
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('840919589761249')
+  }
 ]);
 
 export function provideConfig() {
-  return config;
+  return CONFIG;
 }
 
 @NgModule({
@@ -68,7 +77,10 @@ export function provideConfig() {
     HeaderComponent,
     FooterComponent,
     AppComponent,
+
     HomeComponent,
+    ViewProductComponent,
+
     LoginComponent,
     SignupComponent,
     AdminComponent,
@@ -79,7 +91,8 @@ export function provideConfig() {
     EditStudentComponent,
     StudentsListComponent,
 
-    FileSelectDirective
+    FileSelectDirective,
+    DateAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -92,7 +105,10 @@ export function provideConfig() {
     MatTabsModule,
     MatGridListModule,
     ModalModule.forRoot(),
-    MatIconModule
+    SocialLoginModule,
+    GalleryModule,
+    LightboxModule,
+    ToastrModule.forRoot() // ToastrModule added
   ],
   entryComponents: [SubProductComponent],
   providers:

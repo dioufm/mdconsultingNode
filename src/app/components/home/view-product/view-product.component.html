@@ -1,0 +1,98 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="container">
+      <!-- breadcrumb -->
+      <div class="col">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" [class.active]="false">
+            <a [routerLink]="product.categorie.subcategories[0].name">
+              {{ product.categorie.name}}
+            </a>
+          </li>
+          <li class="breadcrumb-item" [class.active]="false">
+            <a [routerLink]="product.categorie.subcategories[0].name">
+              {{ product.categorie.subcategories[0].name}}
+            </a>
+          </li>
+          <li class="breadcrumb-item" [class.active]="false">
+            <a [routerLink]="product.categorie.typeLogements[0].name">
+              {{ product.categorie.typeLogements[0].name}}
+            </a>
+          </li>
+        </ol>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="alert alert-primary" role="alert">
+            {{product.titre}} : <span class="heading-title text-default mb-0">
+              {{product.prix | number}} CFA
+            </span>
+          </div>
+          <gallery [items]="photos" [counter]="false"></gallery>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="card" style="width: 18rem;">
+            <div class="alert alert-default" role="alert">
+              <span class="btn-inner--icon">Vendeur</span><br>
+            </div>
+            <div class="card-header">
+              <ul>
+                <li>
+                  Membre depuis {{product.user[0].dateCreation | dateAgo}}
+                </li>
+                <li>Derniére connexion {{product.user[0].lastConnexionDate | dateAgo}}</li>
+              </ul>
+
+            </div>
+            <div class="alert alert-default" role="alert">
+              <span class="btn-inner--icon">Contacter</span><br>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngIf="!ifShowTel" class="list-group-item"> <button type="button" class="btn btn-sm btn-primary"
+                  data-toggle="modal" data-target="#modal-default" (click)="showTel()">Voir le téléphone
+                  <i class="fa fa-phone"></i></button>
+              </li>
+              <li *ngIf="ifShowTel" class="list-group-item">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                  data-target="#modal-default">{{product.user[0].email}}
+                </button>
+              </li>
+              <li class="list-group-item">
+                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                  data-target="#modal-default">Contacter par whatsApp <i class="fa fa-whatsapp"
+                    aria-hidden="true"></i></button>
+              </li>
+              <li class="list-group-item">
+                <button type="button" class="btn btn-sm btn-default " data-toggle="modal"
+                  data-target="#modal-default">Contacter par email <i class="fa fa-envelope"
+                    aria-hidden="true"></i></button>
+              </li>
+            </ul>
+
+
+          </div>
+        </div>
+        <div class="description pl-4">
+          <h5 class="title"> {{product.dateCreation |date: 'dd/MM/yyyy h:mm:ss'}}</h5>
+          <h5 class="title">Description: </h5>
+          <p> {{product.description}}</p>
+          <a href="#" class="text-info">Learn more</a>
+        </div>
+      </div>
+      <!-- end section-->
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

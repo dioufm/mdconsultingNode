@@ -14,4 +14,12 @@ module.exports = function (app) {
   app.get("/api/product/country", controller.getCountry);
 
 
+  app.post("/api/product/create", controller.createProduct);
+
+  app.get("/api/products", controller.getAllProducts);
+
+  app.get("/api/products/details", controller.getProduct);
+
+
+
 };

@@ -13,57 +13,34 @@
       <span class="span-100"></span>
     </div>
     <div class="page-header container">
-      <!-- Section: Blog v.2 -->
-      <div class="container shape-container d-flex align-items-center py-lg">
-        <div class="col px-0">
-          <div class="row align-items-center justify-content-center">
-            <div class="col-lg-6 text-center">
-              <img src="./assets/img/brand/blue.png" style="width: 200px;" class="img-fluid">
-              <p class="lead">MD Consulting.</p>
-
-              <div class="btn-wrapper mt-5 lead ">
-                <form class="example-form">
-                  <mat-form-field class="example-full-width">
-                    <mat-label>URL</mat-label>
-                    <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-                      placeholder="Ex. google.com">
-                    <mat-hint>Errors appear instantly!</mat-hint>
-                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                      Please enter a valid email address
-                    </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('required')">
-                      Email is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </form>
+      <div class="container">
+        <h2 class="mt-lg-5 mb-3 text-primary">
+          <span>Annonces : </span>
+        </h2>
+        <div class="row">
+          <div class="col-md-3 col-sm-6" *ngFor="let product of products">
+            <div class="product-grid">
+              <div class="product-image">
+                <a [routerLink]="['/product/',product._id]">
+                  <img class="pic-1" [src]="product.photos[0].imageUrl" width="220px" height="120px"> </a>
+                <div class="price"><a href="#">{{product.categorie.typeLogements[0].name}}</a></div>
+                <h3 class="title"><a href="#">{{product.titre}}</a></h3>
+                <div class="price">{{product.prix}}CFA</div>
+                <span>{{product.region}} / {{product.departement}}/ {{product.ville}}</span>
+                <span class="product-categorie-{{product.categorie.code}}">{{product.categorie.name}}</span>
+                <span class="product-discount-label">NEW</span>
               </div>
-              <div class="mt-5">
-                <div class="btn-wrapper mt-5">
-                  <a href="https://www.creative-tim.com/product/argon-design-system"
-                    class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
-                    <span class="btn-inner--icon"><i class="fa fa-github"></i></span>
-                    <span class="btn-inner--text">Download HTML</span>
-                  </a>
-                  <a href="https://github.com/creativetimofficial/argon-design-system"
-                    class="btn btn-lg btn-github btn-icon mb-3 mb-sm-0" target="_blank">
-                    <span class="btn-inner--icon"><i class="fa fa-github"></i></span>
-                    <span class="btn-inner--text"><span class="text-warning">Star us</span> on
-                      Github</span>
-                  </a>
-                </div>
-                <div class="mt-5">
-                  <small class="font-weight-bold mb-0 mr-2">*proudly coded by</small>
-                  <img src="./assets/img/brand/creativetim-white-slim.png" style="height: 28px;">
-                </div>
+              <div class="product-content">
+                <ul class="social">
+                  <li><a [routerLink]="['/product/',product._id]" data-tip="Voir"><i class="fa fa-search"></i></a></li>
+                  <li><a href="" data-tip="Ajouter à mes favoris"><i class="fa fa-shopping-bag"></i></a></li>
+                  <li><a href="" data-tip="Partager"><i class="fas fa-share"></i></a></li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- end search land-->
-
-
-      <!-- end section-->
     </div>
   </div>
   <!-- End Navbar -->

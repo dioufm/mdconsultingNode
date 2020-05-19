@@ -46,10 +46,31 @@ export class ProductService {
             }));
     }
 
-    addPicture() {
+    addPicture(productId) {
         const URL = `${environment.apiUrl}/upload`;
+        return new FileUploader({ url: URL, itemAlias: 'file', headers: [{ name: 'productId', value: productId }] });
+    }
 
-        return new FileUploader({ url: URL, itemAlias: 'image' });
+
+    createProduct(product, userId) {
+        return this.http.post<any>(`${environment.apiUrl}/product/create`, { product, userId })
+            .pipe(map(message => {
+                return message;
+            }));
+    }
+
+    getProducts() {
+        return this.http.get<any>(`${environment.apiUrl}/products`)
+            .pipe(map(products => {
+                return products;
+            }));
+    }
+
+    getProductById(productId) {
+        return this.http.get<any>(`${environment.apiUrl}/products/details/`, { headers: { productId: productId } })
+            .pipe(map(products => {
+                return products;
+            }));
     }
 
 
