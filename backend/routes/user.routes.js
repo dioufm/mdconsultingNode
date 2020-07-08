@@ -32,9 +32,21 @@ module.exports = function (app) {
     controller.getAllusers
   );
 
+  app.get(
+    "/api/user/userId",
+    [authJwt.verifyToken],
+    controller.getUserById
+  );
+
   app.delete(
     "/api/admin/deleteUser",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteUser
   );
+
+  app.post("/api/user/updateuser", controller.updateUserInfos);
+
+  app.post("/api/user/validateUserInfo", controller.validateUserInfos);
 };
+
+

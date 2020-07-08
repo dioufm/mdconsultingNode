@@ -1,0 +1,192 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="page-header container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 ">
+            <app-user-menu></app-user-menu>
+          </div>
+          <div class="col-md-9">
+            <!-- <pre>{{categorie |json}}</pre>-->
+
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12" *ngIf="categorie != null">
+                    <h4>{{categorie.name}}</h4>
+                    <hr>
+                  </div>
+                  <div class="col-md-12" *ngIf="categorie == null">
+                    <h4>Saisir une nouvelle catégorie</h4>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form class="contact100-form validate-form" [formGroup]="categorieForm" validate>
+                      <!-- surface-->
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+                        <span class="label-input100">Code *</span>
+                        <div *ngIf="categorieForm.controls['code'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="code" placeholder="Nom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+                        <span class="label-input100">Nom *</span>
+                        <div *ngIf="categorieForm.controls['name'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="name" placeholder="nom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+                        <span class="label-input100">Level *</span>
+                        <div *ngIf="categorieForm.controls['level'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="level" placeholder="level">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+                        <span class="label-input100">Couleur *</span>
+                        <div *ngIf="categorieForm.controls['color'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="color" placeholder="color">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+                        <span class="label-input100">Icon *</span>
+                        <div *ngIf="categorieForm.controls['icon'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="icon" placeholder="icon">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" *ngIf="categorie != null">
+                        <span class="label-input100">Vue</span>
+                        <div class="tab-pane fade show active btn mb-3" id="tabs-icons-text-1"
+                          aria-labelledby="tabs-icons-text-1-tab">
+                          <i class="fas {{categorie.icon}}"></i>
+                          <button type="button" (click)="showCategorieModal(categorie)"
+                            class="btn btn-block mb-3 {{categorie.color}}" data-toggle="modal"
+                            data-target="#modal-default">{{categorie.name}}</button>
+                        </div>
+                      </div>
+
+                      <!--sub categories-->
+                      <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                        <span class="label-input100">Sous categorie</span>
+
+                        <table border=1>
+                          <tbody formArrayName="subcategories">
+                            <tr
+                              *ngFor="let itemrow of categorieForm.controls.subcategories.controls; let i=index;let l=last"
+                              [formGroupName]="i">
+                              <td>{{i+1}}</td>
+                              <td>
+                                <input formControlName="code" class="form-control">
+                              </td>
+                              <td>
+                                <input formControlName="name" class="form-control">
+                              </td>
+                              <td>
+                                <input formControlName="level" class="form-control">
+                              </td>
+                              <td>
+                                <button *ngIf="categorieForm.controls.subcategories.controls.length > 0"
+                                  (click)="deleteRow(i)" class="btn btn-danger">Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <button (click)="addNewRow()" type="button">Ajouter une Sous
+                          categorie</button>
+                      </div>
+
+                      <!--types-->
+                      <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                        <span class="label-input100">Types</span>
+                        <table border=1>
+                          <tbody formArrayName="types">
+                            <tr *ngFor="let itemrow of categorieForm.controls.types.controls; let i=index;let l=last"
+                              [formGroupName]="i">
+                              <td>{{i+1}}</td>
+                              <td>
+                                <input formControlName="code" class="form-control">
+                              </td>
+                              <td>
+                                <input formControlName="name" class="form-control">
+                              </td>
+                              <td>
+                                <input formControlName="icon" class="form-control">
+                              </td>
+
+                              <td>
+                                <button *ngIf="categorieForm.controls.types.controls.length > 0"
+                                  (click)="deleteRowType(i)" class="btn btn-danger">Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <button (click)="addNewType()" type="button">Ajouter un type</button>
+
+                        <div class="wrap-input100 validate-input bg0 rs1-alert-validate"
+                          *ngIf="categorie != null && categorie.types != null">
+                          <span class="label-input100">Vues</span>
+                          <table>
+                            <tbody>
+                              <tr *ngFor="let type of categorie.types">
+                                <td class="btn btn-block mb-3 ">
+                                  {{ type.name }}
+                                </td>
+                                <td>
+                                  <label [ngClass]="displayFieldCss('typeProduct',type.code)"
+                                    (click)="choiceType('typeProduct',type.code)">
+                                    <mat-icon svgIcon="{{type.icon}}"></mat-icon>
+                                    {{type.name}}
+                                  </label>
+                                </td>
+                                <td>
+                                  <button (click)="viewCategorieDetails(type._id)" type="button">Edit</button>
+                                  <button (click)="removeCategorie(type._id)" type="button">Delete</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="modal-footer  justify-content-center" *ngIf="categorie != null">
+                      <button class="btn btn-danger" type="button" (click)="removeUser(productId)">Supprimer</button>
+                      <button class="btn btn-primary" type="button" (click)="validateCategorie()">Valider</button>
+                    </div>
+                    <div class="modal-footer  justify-content-center" *ngIf="categorie == null">
+                      <button class="btn btn-primary" type="button" (click)="addNewCategorie()">Valider</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

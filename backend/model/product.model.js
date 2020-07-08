@@ -19,7 +19,7 @@ const Product = mongoose.model(
             icon: String
           }
         ],
-      typeLogements:
+      types:
         [
           {
             code: String,
@@ -28,14 +28,24 @@ const Product = mongoose.model(
           }
         ]
     },
+    typeOffre: String,
+    newProduct: String,
+
     surface: Number,
     nbPieces: Number,
+
+    marque: String,
+    modele: String,
+    km: String,
+    boiteVitesse: String,
+    carburant: String,
+    nbPlaces: String,
+
     titre: String,
     description: String,
     prix: Number,
-    region: String,
-    departement: String,
     ville: String,
+    villeName: String,
     dateCreation: { type: Date, default: Date.now },
     photos:
       [{
@@ -46,16 +56,36 @@ const Product = mongoose.model(
         imageUrl: { type: String },
         modificationDate: { type: Date, "default": Date.now }
       }],
-    user: {
+
+    user:
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    statut: { type: String, "default": 'PUBLIE' },
+
+    userdata:
+    {
       username: String,
       email: String,
       password: String,
-      roles: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Role"
-        }
-      ]
+      firstname: String,
+      email: String,
+      tel: String,
+      showTel: String,
+      telwhatsapp: String,
+      showTelWhatsapp: String,
+      numberproduct: Number,
+      photo:
+      {
+        size: { type: Number },
+        filename: { type: String },
+        data: { type: Buffer },
+        contentType: { type: String },
+        imageUrl: { type: String }
+      },
+      dateCreation: { type: Date, default: Date.now },
+      lastConnexionDate: { type: Date, default: Date.now },
     }
   })
 );

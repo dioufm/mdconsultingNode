@@ -1,0 +1,101 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="page-header container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 ">
+            <app-user-menu></app-user-menu>
+          </div>
+          <div class="col-md-9">
+            <div class="card" *ngIf="page === 'users'">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>Utilisateurs</h4>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of users">
+                          <td>{{ item.username }}</td>
+                          <td>{{ item.email }}</td>
+                          <td>
+                            <button (click)="viewUser(item._id)" type="button">Edit</button>
+                            <button (click)="removeUser(item._id)" type="button">Delete</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="card" *ngIf="page === 'categories'">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>categories</h4>
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Code</th>
+                          <th>Name</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of categories">
+                          <th>{{ item.code }}</th>
+                          <td class="btn btn-block mb-3 {{item.color}}" (click)="viewCategorieDetails(item._id)"><i
+                              class="fas {{item.icon}}"></i>
+                            {{ item.name }}</td>
+                          <td>
+                            <button (click)="viewCategorieDetails(item._id)" type="button">Edit</button>
+                            <button (click)="removeCategorie(item._id)" type="button">Delete</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <button (click)="addNewCategorie()" type="button">Ajouter une nouvelle categorie</button>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

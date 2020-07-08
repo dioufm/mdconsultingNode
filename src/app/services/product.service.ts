@@ -4,12 +4,14 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/user';
 import { AuthenticationService } from './authentication.service';
-import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload';
 
 
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
+
+
 
     currentUser: User;
 
@@ -22,18 +24,12 @@ export class ProductService {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
 
-    getAllCategories() {
-        return this.http.get<any>(`${environment.apiUrl}/product/categories`)
-            .pipe(map(categories => {
-                return categories;
-            }));
-    }
 
-    remove(userId: any) {
+    removeProduct(productId: any) {
         const token = this.currentUser.accessToken;
-        return this.http.delete<any>(`${environment.apiUrl}/admin/deleteUser`, { headers: { 'x-access-token': token, _id: userId } })
-            .pipe(map(users => {
-                return users;
+        return this.http.delete<any>(`${environment.apiUrl}/product/delete`, { headers: { 'x-access-token': token, _id: productId } })
+            .pipe(map(products => {
+                return products;
             }));
     }
 
@@ -46,6 +42,15 @@ export class ProductService {
             }));
     }
 
+    getMarques() {
+        return this.http.get<any>(`${environment.apiUrl}/product/marques`)
+            .pipe(map(marques => {
+                return marques;
+            }));
+    }
+
+
+
     addPicture(productId) {
         const URL = `${environment.apiUrl}/upload`;
         return new FileUploader({ url: URL, itemAlias: 'file', headers: [{ name: 'productId', value: productId }] });
@@ -54,6 +59,13 @@ export class ProductService {
 
     createProduct(product, userId) {
         return this.http.post<any>(`${environment.apiUrl}/product/create`, { product, userId })
+            .pipe(map(message => {
+                return message;
+            }));
+    }
+
+    updateProduct(product, userId) {
+        return this.http.post<any>(`${environment.apiUrl}/product/update`, { product, userId })
             .pipe(map(message => {
                 return message;
             }));
@@ -73,5 +85,10 @@ export class ProductService {
             }));
     }
 
-
+    getProductsByUserId(userId: string) {
+        return this.http.get<any>(`${environment.apiUrl}/products/user/`, { headers: { userid: userId } })
+            .pipe(map(products => {
+                return products;
+            }));
+    }
 }

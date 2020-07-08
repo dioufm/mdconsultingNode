@@ -1,3 +1,4 @@
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/product.controller");
 
 module.exports = function (app) {
@@ -9,16 +10,27 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/product/categories", controller.getAllCategories);
-
   app.get("/api/product/country", controller.getCountry);
+
+  app.get("/api/product/marques", controller.getMarques);
 
 
   app.post("/api/product/create", controller.createProduct);
 
+  app.post("/api/product/update", controller.updateProduct);
+
   app.get("/api/products", controller.getAllProducts);
 
   app.get("/api/products/details", controller.getProduct);
+
+  app.get("/api/products/user", controller.getProductByUser);
+
+  app.delete(
+    "/api/product/delete",
+    [authJwt.verifyToken],
+    controller.removeProduct
+  );
+
 
 
 

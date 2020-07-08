@@ -17,6 +17,12 @@ export class CommonService {
 
     private loginEventCreatingProduct = new Subject();
 
+    currentCategorie = new Subject();
+
+    currentSubCategorie = new Subject();
+
+    private navigatePageEvent = new Subject();
+
     getSubscribeEvent(): Observable<any> {
         return this.subscribeEvent.asObservable();
     }
@@ -39,6 +45,30 @@ export class CommonService {
 
     setLoginEventCreatingProduct(loginEventCreatingProduct) {
         this.loginEventCreatingProduct.next(loginEventCreatingProduct);
+    }
+
+    getCurrentCategorie(): Observable<any> {
+        return this.currentCategorie.asObservable();
+    }
+
+    setCurrentCategorie(currentCategorie) {
+        this.currentCategorie.next(currentCategorie);
+    }
+
+    getCurrentSubCategorie(): Observable<any> {
+        return this.currentSubCategorie.asObservable();
+    }
+
+    setCurrentSubCategorie(subCategorie) {
+        this.currentSubCategorie.next(subCategorie);
+    }
+
+    getNavigatePageEvent(): Observable<any> {
+        return this.navigatePageEvent.asObservable();
+    }
+
+    setNavigatePageEvent(navigatePageEvent) {
+        this.navigatePageEvent.next(navigatePageEvent);
     }
 
 }

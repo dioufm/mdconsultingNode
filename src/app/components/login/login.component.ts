@@ -1,22 +1,16 @@
-import { Component, OnInit, NgZone, Input } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
-
-import { Router } from '@angular/router';
-//import { CommonService } from 'src/app/services/common/common.service';
-import { environment } from 'src/environments/environment';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { ApiService } from 'src/app/shared/api.service';
-import { first } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { CommonService } from 'src/app/shared/common.service';
-
-import { AuthService } from 'angularx-social-login';
-import { SocialUser } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider, } from 'angularx-social-login';
-import { User } from 'src/app/shared/user';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../../services/authentication.service';
+import { CommonService } from '../../shared/common.service';
+import { User } from '../../shared/user';
+
+
 
 
 
@@ -102,7 +96,9 @@ export class LoginComponent implements OnInit {
               if (!this.isCreatingProduct) {
                 this.router.navigateByUrl('/');
               } else {
-                this.router.navigateByUrl('/createproduct');
+                this.router.navigateByUrl('/annonce');
+                //this.router.navigate(['annonce'], { queryParams: { categorieCode: this.categorie.code, subCategorieCode: this.subCategorieSelected.code } });
+
               }
 
             },
@@ -123,7 +119,7 @@ export class LoginComponent implements OnInit {
                       this.router.navigateByUrl('/');
                     } else {
                       this.commonService.setLoginEventCreatingProduct(true);
-                      this.router.navigateByUrl('/createproduct');
+                      this.router.navigateByUrl('/annonce');
                     }
                   },
                   error => {
@@ -156,7 +152,7 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl('/');
             } else {
               this.commonService.setLoginEventCreatingProduct(true);
-              this.router.navigateByUrl('/createproduct');
+              this.router.navigateByUrl('/annonce');
             }
             this.toastr.success('Vous êtes connecté.');
           },

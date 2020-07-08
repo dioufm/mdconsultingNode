@@ -1,0 +1,156 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="page-header container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 ">
+            <app-user-menu></app-user-menu>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>Mes informations personnelles</h4>
+                    <hr>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <form class="contact100-form validate-form" [formGroup]="userForm" validate>
+                      <!-- surface-->
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Nom *</span>
+                        <div *ngIf="userForm.controls['username'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="username" placeholder="Nom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Prénom *</span>
+                        <div *ngIf="userForm.controls['firstname'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="firstname" placeholder="Prénom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Téléphone *</span>
+                        <div *ngIf="userForm.controls['tel'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="tel" placeholder="Téléphone">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Masquer le numéro de téléphone ? </span>
+
+                        <div class="contact100-form-radio m-t-15">
+                          <input class="input-radio100" id="radio11" type="radio" formControlName="showTel"
+                            name="showTel" value="1" checked="checked">
+                          <label class="label-radio100" for="radio11">
+                            Oui
+                          </label>
+                        </div>
+
+                        <div class="contact100-form-radio">
+                          <input class="input-radio100 form-control" id="radio22" type="radio" formControlName="showTel"
+                            name="showTel" value="0">
+                          <label class="label-radio100" for="radio22">
+                            Non
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Téléphone WhatsApp</span>
+                        <div *ngIf="userForm.controls['telwhatsapp'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="telwhatsapp"
+                            placeholder="Téléphone whartsApp">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Masquer le numéro de téléphone whatsApp ? </span>
+
+                        <div class="contact100-form-radio m-t-15">
+                          <input class="input-radio100" id="radio1" type="radio" formControlName="showTelWhatsapp"
+                            name="showTelWhatsapp" value="1" checked="checked">
+                          <label class="label-radio100" for="radio1">
+                            Oui
+                          </label>
+                        </div>
+
+                        <div class="contact100-form-radio">
+                          <input class="input-radio100 form-control" id="radio2" type="radio"
+                            formControlName="showTelWhatsapp" name="showTelWhatsapp" value="0">
+                          <label class="label-radio100" for="radio2">
+                            Non
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Email *</span>
+                        <div *ngIf="userForm.controls['email'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input readonly type="text" class="form-control" formControlName="email"
+                            placeholder="adresse e-mail">
+                        </div>
+                      </div>
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Mot de passe *</span>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                          data-target="#modal-default" (click)="changePassword()">Changer mot de passe
+                        </button>
+                        <div *ngIf="userForm.controls['password'].errors && isChangePassword" class="text-danger">
+                          obligatoire</div>
+                        <div class="input-group" *ngIf="isChangePassword">
+                          <input readonly type="text" class="form-control" formControlName="password"
+                            placeholder="Nouveau mot de passe">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100"
+                        *ngIf="user!= null && user.roles != null">
+                        <span class="label-input100">Role</span>
+                        <div class="input-group">
+                          <select formControlName="role" id="role">
+                            <option *ngFor="let role of user.roles" [value]="role">
+                              {{role}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="modal-footer  justify-content-center">
+                      <button class="btn btn-danger" type="button" (click)="removeUser(productId)">Supprimer</button>
+                      <button class="btn btn-primary" type="button" (click)="validateUserInfo()">Valider</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

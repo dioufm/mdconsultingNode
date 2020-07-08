@@ -13,6 +13,8 @@ db.country = require("./country.model");
 db.photo = require("./photo.model");
 db.product = require("./product.model");
 
+db.marque = require("./marque.model");
+
 db.ROLES = ["user", "admin", "moderator"];
 
 

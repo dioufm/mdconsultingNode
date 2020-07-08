@@ -1,0 +1,310 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="container container-contact100">
+
+      <h3 class="text-primary">
+        <span *ngIf="categorie != null">{{categorie.name}} / {{subCategorie.name}}</span>
+      </h3>
+
+      <div class="container-contact100">
+        <h5 class="text-primary">
+          <span>{{stepMessage}}</span>
+        </h5>
+      </div>
+
+      <div class="container-contact100  wrap-contact100">
+        <!-- START Filling form-->
+        <div *ngIf="stepCreateProduct">
+          <form class="contact100-form validate-form" [formGroup]="createaAnonceForm" (ngSubmit)="gotoFixPrice()"
+            validate>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100">
+              <span class="label-input100">Type d'annonce *</span>
+
+              <div class="contact100-form-radio m-t-15">
+                <input class="input-radio100" id="radio1" type="radio" formControlName="typeOffre" name="typeOffre"
+                  value="VENTE" checked="checked">
+                <label class="label-radio100" for="radio1">
+                  Vente
+                </label>
+              </div>
+
+              <div class="contact100-form-radio">
+                <input class="input-radio100 form-control" id="radio2" type="radio" formControlName="typeOffre"
+                  name="typeOffre" value="DEMANDE">
+                <label class="label-radio100" for="radio2">
+                  Demande
+                </label>
+              </div>
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100">
+              <span class="label-input100">Le produit est neuf ? *</span>
+
+              <div class="contact100-form-radio m-t-15">
+                <input class="input-radio100" id="radio3" type="radio" formControlName="newProduct" name="newProduct"
+                  value="1" checked="checked">
+                <label class="label-radio100" for="radio3">
+                  Oui
+                </label>
+                <input class="input-radio100" id="radio4" type="radio" formControlName="newProduct" name="newProduct"
+                  value="0" checked="checked">
+                <label class="label-radio100" for="radio4">
+                  Non
+                </label>
+              </div>
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100 ">
+              <span class="label-input100">Quel est votre prix ? *</span>
+
+              <div class="contact100-form-radio m-t-15">
+                <div *ngIf="createaAnonceForm.controls['prix'].errors" class="text-danger">obligatoire</div>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="prix"
+                    placeholder="Indiquez votre prix.Ex. 100 000">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <b><var>FCFA</var></b>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wrap-input100" *ngIf="categorie.types?.length > 0" [categorie]="categorie.code">
+              <span class="label-input100">Quels biens ? *(cliquez sur le bien)</span>
+              <span *ngIf="createaAnonceForm.controls['typeProduct'].errors" class="text-danger"> Obligatoire</span>
+              <div class="form-group col-md-12">
+
+                <div class="custom-radio custom-control-inline-modify col-md-3" *ngFor="let type of categorie.types">
+                  <label [ngClass]="displayFieldCss('typeProduct',type.code)"
+                    (click)="choiceType('typeProduct',type.code)">
+                    <mat-icon svgIcon="{{type.icon}}"></mat-icon>
+                    {{type.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- marques voiture-->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100">Marque *</span>
+              <div *ngIf="createaAnonceForm.controls['marque'].errors" class="text-danger">obligatoire</div>
+              <mat-form-field>
+                <mat-select formControlName="marque" #singleSelect (selectionChange)="marqueChange()">
+                  <mat-option>
+                    <ngx-mat-select-search formControlName="marque2" placeholderLabel="Trouver la amrque.."
+                      noEntriesFoundLabel="Aucune marque trouvée">
+                    </ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let marque of filteredMarques | async" [value]="marque.marque">
+                    {{marque.marque}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- modeles voiture-->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100">Modele *</span>
+              <div *ngIf="createaAnonceForm.controls['marque'].errors" class="text-danger">obligatoire</div>
+              <mat-form-field>
+                <mat-select formControlName="modele" #singleSelect>
+                  <mat-option>
+                    <ngx-mat-select-search formControlName="modele2" placeholderLabel="Trouver la marque.."
+                      noEntriesFoundLabel="Aucune marque trouvée">
+                    </ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let modele of filteredModeles | async" [value]="modele.name">
+                    {{modele.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- km -->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100">Combien de KM? *</span>
+
+              <div class="contact100-form-radio m-t-15">
+                <div *ngIf="createaAnonceForm.controls['km'].errors" class="text-danger">obligatoire</div>
+                <div class="input-group">
+                  <input type="text" class="form-control" formControlName="km"
+                    placeholder="Indiquez le kilométrage .Ex. 100 000">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <b><var>KM</var></b>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Moteur -->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100"> Moteur *</span>
+              <div *ngIf="createaAnonceForm.controls['boiteVitesse'].errors" class="text-danger">obligatoire</div>
+              <div class="form-group col-md-12">
+                <div class="custom-radio custom-control-inline-modify col-md-6" *ngFor="let boite of boiteVitesses">
+                  <label [ngClass]="displayFieldCss('boiteVitesse',boite.code)"
+                    (click)="choiceType('boiteVitesse',boite.code)">
+                    <mat-icon svgIcon="{{boite.icon}}"></mat-icon>
+                    {{boite.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carburant-->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100">Carburant *</span>
+              <div *ngIf="createaAnonceForm.controls['carburant'].errors" class="text-danger">obligatoire</div>
+              <div class="form-group col-md-12">
+                <div class="custom-radio custom-control-inline-modify col-md-6" *ngFor="let carburant of carburants">
+                  <label [ngClass]="displayFieldCss('carburant',carburant.code)"
+                    (click)="choiceType('carburant',carburant.code)">
+                    <mat-icon svgIcon="{{carburant.icon}}"></mat-icon>
+                    {{carburant.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- places-->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
+              [categorie]="categorie.code">
+              <span class="label-input100">Nombre de places *</span>
+              <div *ngIf="createaAnonceForm.controls['nbPlaces'].errors" class="text-danger">obligatoire</div>
+              <div class="form-group col-md-12">
+                <div class="custom-radio custom-control-inline-modify col-md-6" *ngFor="let place of places">
+                  <label [ngClass]="displayFieldCss('nbPlaces',place.code)" (click)="choiceType('nbPlaces',place.code)">
+                    <mat-icon svgIcon="{{place.icon}}"></mat-icon>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- surface-->
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieImo
+              [categorie]="categorie.code">
+              <span class="label-input100">Surface *</span>
+              <div *ngIf="createaAnonceForm.controls['surface'].errors" class="text-danger">obligatoire</div>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="surface"
+                  placeholder="surface habitable. ex. 100">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <b><var>M<sup>2</sup></var></b>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div ifCategorieImo [categorie]="categorie.code"
+              class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100">
+              <span class="label-input100">Nombre de pièces *</span>
+              <div *ngIf="createaAnonceForm.controls['nbPieces'].errors" class="text-danger">obligatoire</div>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="nbPieces"
+                  placeholder="Nombre de pièces. ex. 3">
+              </div>
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100">
+              <span class="label-input100">Ville *</span>
+              <div *ngIf="createaAnonceForm.controls['ville'].errors" class="text-danger">obligatoire</div>
+              <mat-form-field>
+                <mat-select formControlName="ville" #singleSelect>
+                  <mat-option>
+                    <ngx-mat-select-search formControlName="ville2" placeholderLabel="Trouver la ville..."
+                      noEntriesFoundLabel="Aucune ville trouvée">
+                    </ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let ville of filteredVilles | async" [value]="ville.code">
+                    {{ville.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+              <span class="label-input100">Description de l'annonce *</span>
+              <div *ngIf="createaAnonceForm.controls['description'].errors" class="text-danger">obligatoire</div>
+              <textarea class="form-control" name="description" formControlName="description"
+                placeholder="Ex. Appartement composé de 2 chambres dont une avec salle de bain, une autre avec balcon, un grand salon avec balcon, une cuisine..."></textarea>
+            </div>
+
+          </form>
+          <!--
+<pre>{{createaAnonceForm.value|json}}</pre>
+
+          -->
+
+        </div>
+
+        <div *ngIf="stepLogin">
+          <app-login isCreatingProduct=true></app-login>
+        </div>
+
+
+        <!-- START adding picture-->
+        <div class="wrap-input100" *ngIf="stepAddPicture">
+          <input type="file" name="file" ng2FileSelect [uploader]="uploader" multiple />
+          <table>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <th width="90%">
+                  <div class="text-center">
+                    <img src="" thumbnail [image]="item?._file" />
+                  </div>
+                </th>
+                <th class="text-center" width="10%">
+                  <span (click)="item.remove()"> Supprimer<i class="fas fa-trash-alt"></i></span>
+
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Contact Informations-->
+        <div *ngIf="stepFinalValidation">
+          <app-user-infos [product]="product">
+          </app-user-infos>
+        </div>
+
+
+
+        <div class="modal-footer" *ngIf="stepCreateProduct">
+          <button *ngIf="stepCreateProduct" class="btn btn-primary" type="button" [disabled]="!createaAnonceForm.valid"
+            (click)="gotoLogin()">Suivant</button>
+        </div>
+
+        <div class="modal-footer" *ngIf="stepAddPicture">
+          <button class="btn btn-default" type="button" (click)="gotoStepCreateProduct()">Précedent</button>
+          <button class="btn btn-primary" type="button" (click)="addPicture()">Suivant</button>
+        </div>
+
+        <!-- end section-->
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

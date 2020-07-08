@@ -13,4 +13,10 @@ module.exports = function (app) {
 
   app.post("/api/upload", upload.single('file'), controller.uploadFile);
 
+
+  app.post("/api/uploadUserPicture", upload.single('file'), controller.uploadUserPicture);
+
+  //app.post("/api/upload", upload.array('file', 4), controller.uploadFile);
+
+
 };

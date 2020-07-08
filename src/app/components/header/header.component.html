@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
     <div class="container">
-        <a class="navbar-brand mr-lg-5" href="../index.html">
+        <a class="navbar-brand mr-lg-5" routerLink="app-home">
             <img src="../assets/img/brand/blue.png">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
@@ -76,7 +76,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a href="../examples/landing.html" class="dropdown-item">Landing</a>
-                        <a href="../examples/profile.html" class="dropdown-item">Profile</a>
+                        <a routerLink="user" class="dropdown-item">Profile</a>
                         <a href="../examples/login.html" class="dropdown-item">Login</a>
                         <a href="../examples/register.html" class="dropdown-item">Register</a>
                     </div>
@@ -101,15 +101,13 @@
             </ul>
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center" *ngIf="currentUser!=null">
                 <li class="nav-item dropdown">
-                    <a routerLink="login" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                    <a routerLink="dashboard" class="nav-link" data-toggle="dropdown" href="#" role="button">
                         <i class="fa fa-user"></i>
                         <span class="nav-link-inner--text">{{currentUser.username}}</span>
                     </a>
                     <div class="dropdown-menu">
                         <a (click)="logout()" href="#" class="dropdown-item">Se deconnecter</a>
-                        <a routerLink="profil" class="dropdown-item">Profile</a>
-                        <a routerLink="admin" class="dropdown-item">Tableau de bord</a>
-
+                        <a [routerLink]="['/user','dashboard']" class="dropdown-item">Mon compte</a>
                     </div>
                 </li>
             </ul>

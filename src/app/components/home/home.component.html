@@ -14,6 +14,7 @@
     </div>
     <div class="page-header container">
       <div class="container">
+        <search-product></search-product>
         <h2 class="mt-lg-5 mb-3 text-primary">
           <span>Annonces : </span>
         </h2>
@@ -22,13 +23,23 @@
             <div class="product-grid">
               <div class="product-image">
                 <a [routerLink]="['/product/',product._id]">
-                  <img class="pic-1" [src]="product.photos[0].imageUrl" width="220px" height="120px"> </a>
-                <div class="price"><a href="#">{{product.categorie.typeLogements[0].name}}</a></div>
-                <h3 class="title"><a href="#">{{product.titre}}</a></h3>
-                <div class="price">{{product.prix}}CFA</div>
-                <span>{{product.region}} / {{product.departement}}/ {{product.ville}}</span>
-                <span class="product-categorie-{{product.categorie.code}}">{{product.categorie.name}}</span>
-                <span class="product-discount-label">NEW</span>
+                  <img *ngIf="product.photos.length > 0" class="pic-1" [src]="product.photos[0].imageUrl" width="220px"
+                    height="120px"> </a>
+                <div *ngIf="product.categorie.types.length > 0" class="price">
+                  <a [routerLink]="['/home/',product.categorie.types[0].name]">{{product.categorie.types[0].name}} </a>
+                </div>
+                <h3 class="title"><a [routerLink]="['/product/',product._id]">{{product.titre}} <i
+                      class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span> {{product.villeName}}</span></a></h3>
+                <div class="price">{{product.prix | currency:'XOF':'symbol':'3.0-0':'fr' }}</div>
+                <!--
+                   <span> <i class="fa fa-map-marker" aria-hidden="true"></i>{{product.villeName}}</span>
+                -->
+
+                <span class="product-new-label"><span type="button"
+                    class="{{product.categorie.color }} ">{{product.categorie.name}}</span></span>
+                <span class="product-discount-label"><i
+                    class="far fa-clock"></i>{{product.dateCreation | dateAgo}}</span>
               </div>
               <div class="product-content">
                 <ul class="social">

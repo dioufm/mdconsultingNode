@@ -1,0 +1,33 @@
+<h2 class="mt-lg-5 mb-3 text-primary">
+        <span>Mon compte </span>
+</h2>
+<div class="list-group" *ngIf="isAdmin">
+        <h4>Admin Menu</h4>
+        <a [routerLink]="['/user-admin','users']" [ngClass]="displayLinkActivatedCss('users')">users</a>
+        <a [routerLink]="['/user-admin','products']" [ngClass]="displayLinkActivatedCss('products')">Products</a>
+        <a [routerLink]="['/user-admin','invoicing']" [ngClass]="displayLinkActivatedCss('invoicing')">Invoicing</a>
+        <a [routerLink]="['/user-admin','categories']" [ngClass]="displayLinkActivatedCss('categories')">Categories</a>
+        <hr>
+</div>
+<div class="list-group ">
+        <a [routerLink]="['/user','dashboard']" [ngClass]="displayLinkActivatedCss('dashboard')">Tableau de bord <i
+                        class="fa fa-tachometer" aria-hidden="true"></i> </a>
+
+        <a [routerLink]="['/user','userinfo']" [ngClass]="displayLinkActivatedCss('userinfo')">Mes informations <i
+                        class="fa fa-user" aria-hidden="true"></i></a>
+
+        <a [routerLink]="['/user','annonces']"
+                [ngClass]="displayLinkActivatedCss('annonces') || displayLinkActivatedCss('product')">Mes annonces <i
+                        class="fa fa-bullhorn" aria-hidden="true"></i></a>
+
+        <a [routerLink]="['/user','achats']" [ngClass]="displayLinkActivatedCss('achats')">Mes achats <i
+                        class="fa fa-shopping-cart" aria-hidden="true"></i> </a>
+
+        <a [routerLink]="['/user','credits']" [ngClass]="displayLinkActivatedCss('credits')">Mes crédits <i
+                        class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <a [routerLink]="['/user','messages']" [ngClass]="displayLinkActivatedCss('messages')">Mes messages <i
+                        class="fa fa-envelope" aria-hidden="true"></i></a>
+
+
+</div>

@@ -8,32 +8,11 @@ const Country = mongoose.model(
     level: Number,
     color: String,
     icon: String,
-    regions:
+    villes:
       [
         {
           code: String,
           name: String,
-          departements:
-            [
-              {
-                code: String,
-                name: String,
-                villes:
-                  [
-                    {
-                      code: String,
-                      name: String,
-                      quartiers:
-                        [
-                          {
-                            code: String,
-                            name: String
-                          }
-                        ]
-                    }
-                  ]
-              }
-            ]
         }
       ]
   })

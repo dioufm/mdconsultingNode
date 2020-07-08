@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ProductService } from 'src/app/services/product.service';
-
-import { Gallery, GalleryItem, ImageItem, ThumbnailsPosition, ImageSize } from 'ng-gallery';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { ProductService } from '../../../services/product.service';
+import { environment } from 'src/environments/environment';
+
 
 
 @Component({
@@ -65,13 +63,14 @@ export class ViewProductComponent implements OnInit {
           ' Elle applique le Routing, le Lazy loading, le Server side rendering et les Progressive Web App (PWA)'
       });
 
-    this.productId = this.route.snapshot.paramMap.get("productId")
+    this.productId = this.route.snapshot.paramMap.get("productId");
 
     this.productService.getProductById(this.productId)
       .subscribe(
         data => {
           this.product = data;
           this.photos = data.photos.map(item => new ImageItem({ src: item.imageUrl, thumb: item.imageUrl }));
+
 
           this.breadcrumbList.push({
             name: 'this.product.categorie.subcategories[0].name',
@@ -87,5 +86,6 @@ export class ViewProductComponent implements OnInit {
   showTel() {
     this.ifShowTel = true;
   }
+
 
 }

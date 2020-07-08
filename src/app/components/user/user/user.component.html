@@ -1,0 +1,292 @@
+<body class="index-page">
+  <div class="section">
+    <div class="shape shape-style-1 shape-primary">
+      <span class="span-150"></span>
+      <span class="span-50"></span>
+      <span class="span-50"></span>
+      <span class="span-75"></span>
+      <span class="span-100"></span>
+      <span class="span-75"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+      <span class="span-50"></span>
+      <span class="span-100"></span>
+    </div>
+    <div class="page-header container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 ">
+            <app-user-menu></app-user-menu>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>{{title}}</h4>
+                    <hr>
+                  </div>
+                </div>
+                <!-- USER Info -->
+                <div class="row" *ngIf="isShowUserInfo">
+                  <div class="col-md-12">
+                    <form class="contact100-form validate-form" [formGroup]="userForm" validate>
+                      <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                        <table *ngIf="isChangePhotoProfile">
+                          <input type="file" name="file" ng2FileSelect [uploader]="uploader" multiple />
+                          <tbody>
+                            <tr *ngFor="let item of  uploader.queue">
+                              <th width="90%">
+                                <div class="text-center">
+                                  <img src="" thumbnail [image]="item?._file" />
+                                </div>
+                              </th>
+                              <th class="text-center" width="10%">
+                                <button class="btn btn-primary" type="button"
+                                  (click)="addUserPicture()">valider</button>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="!isChangePhotoProfile && user!=null && user.photo!= null">
+                          <tbody>
+                            <tr style="text-align: center;">
+                              <img *ngIf="user.photo !=null" class="pic-1" [src]="user.photo.imageUrl" width="100px"
+                                height="100px">
+                              <label *ngIf="user.photo ==null">
+                                <mat-icon svgIcon='user_icon'></mat-icon>
+                              </label>
+                              <button class="btn-sm btn-primary" type="button"
+                                (click)="changePhotoProfile()">changer</button>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Nom *</span>
+                        <div *ngIf="userForm.controls['username'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="username" placeholder="Nom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Prénom *</span>
+                        <div *ngIf="userForm.controls['firstname'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="firstname" placeholder="Prénom">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Téléphone *</span>
+                        <div *ngIf="userForm.controls['tel'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="tel" placeholder="Téléphone">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Masquer le numéro de téléphone ? </span>
+
+                        <div class="contact100-form-radio m-t-15">
+                          <input class="input-radio100" id="radio11" type="radio" formControlName="showTel"
+                            name="showTel" value="1" checked="checked">
+                          <label class="label-radio100" for="radio11">
+                            Oui
+                          </label>
+                        </div>
+
+                        <div class="contact100-form-radio">
+                          <input class="input-radio100 form-control" id="radio22" type="radio" formControlName="showTel"
+                            name="showTel" value="0">
+                          <label class="label-radio100" for="radio22">
+                            Non
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Téléphone WhatsApp</span>
+                        <div *ngIf="userForm.controls['telwhatsapp'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="telwhatsapp"
+                            placeholder="Téléphone whartsApp">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Masquer le numéro de téléphone whatsApp ? </span>
+
+                        <div class="contact100-form-radio m-t-15">
+                          <input class="input-radio100" id="radio1" type="radio" formControlName="showTelWhatsapp"
+                            name="showTelWhatsapp" value="1" checked="checked">
+                          <label class="label-radio100" for="radio1">
+                            Oui
+                          </label>
+                        </div>
+
+                        <div class="contact100-form-radio">
+                          <input class="input-radio100 form-control" id="radio2" type="radio"
+                            formControlName="showTelWhatsapp" name="showTelWhatsapp" value="0">
+                          <label class="label-radio100" for="radio2">
+                            Non
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Email *</span>
+                        <div *ngIf="userForm.controls['email'].errors" class="text-danger">obligatoire</div>
+                        <div class="input-group">
+                          <input readonly type="text" class="form-control" formControlName="email"
+                            placeholder="adresse e-mail">
+                        </div>
+                      </div>
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+                        <span class="label-input100">Mot de passe *</span>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                          data-target="#modal-default" (click)="changePassword()">Changer mot de passe
+                        </button>
+
+                        <div class="input-group" *ngIf="isChangePassword">
+                          <input type="text" class="form-control" formControlName="newpassword"
+                            placeholder="Nouveau mot de passe">
+                        </div>
+                      </div>
+
+                      <div class="wrap-input100 validate-input bg1 rs1-wrap-input100"
+                        *ngIf="user != null && user.roles != null">
+                        <span class="label-input100">Role</span>
+                        <div class="input-group">
+                          <select formControlName="role" id="role">
+                            <option *ngFor="let role of user.roles" [value]="role">
+                              {{role}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="modal-footer  justify-content-center">
+                      <button class="btn btn-primary" type="button" (click)="validateUserInfo()">Valider</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dasboard-->
+
+                <div class="row" *ngIf="isShowDashboard">
+
+                  <div class="card col-md-6 text-white">
+                    <div class="card-body">
+                      <h3 class="card-title"><i class="fa fa-bullhorn" aria-hidden="true"></i> Annonces
+                        <button type="button" class="btn">
+                          <h3><span class="badge badge-default">{{user.numberproduct}}</span></h3>
+                        </button>
+                      </h3>
+                      <a [routerLink]="['/user','annonces']"><button type="button" class="btn btn-default">
+                          voir mes annonces
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="card col-md-6 text-white">
+                    <div class="card-body">
+                      <h3 class="card-title"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Achats
+                        <button type="button" class="btn">
+                          <h3><span class="badge badge-default">{{user.numberproductachat}}</span></h3>
+                        </button>
+                      </h3>
+                      <a [routerLink]="['/user','achats']"><button type="button" class="btn btn-default">
+                          voir mes achats
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+
+
+                  <div class="card col-md-6 text-white">
+                    <div class="card-body">
+                      <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Crédit
+                        <button type="button" class="btn">
+                          <h3><span class="badge badge-default">{{user.credit}}</span></h3>
+                        </button>
+                      </h3>
+                      <a [routerLink]="['/user','credits']">
+                        <button type="button" class="btn btn-default">
+                          voir mon crédit
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+
+
+                  <div class="card col-md-6 text-white">
+                    <div class="card-body">
+                      <h3 class="card-title"><i class="fa fa-envelope" aria-hidden="true"></i> Messages
+                        <button type="button" class="btn">
+                          <h3><span class="badge badge-default">{{user.countnewMessage}}</span></h3>
+                        </button>
+                      </h3>
+                      <a [routerLink]="['/user','messages']">
+                        <button type="button" class="btn btn-default">
+                          voir mes messages
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row" *ngIf="isShowAnnonce">
+                  <div class="col-md-3 col-sm-6" *ngFor="let product of products">
+
+                    <div class="product-grid">
+                      <div class="product-image">
+                        <a [routerLink]="['/user/product/',product._id]">
+                          <img *ngIf="product.photos.length > 0" class="pic-1" [src]="product.photos[0].imageUrl"
+                            width="220px" height="120px"> </a>
+                        <div *ngIf="product.categorie.types.length > 0" class="price">
+                          <a [routerLink]="['/home/',product.categorie.types[0].name]">{{product.categorie.types[0].name}}
+                          </a>
+                        </div>
+                        <h3 class="title"><a [routerLink]="['/product/',product._id]">{{product.titre}} <i
+                              class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span> {{product.villeName}}</span></a></h3>
+                        <div class="price">{{product.prix | currency:'XOF':'symbol':'3.0-0':'fr' }}</div>
+
+                        <span>{{product.statut}}</span>
+
+                      </div>
+                      <div class="product-content">
+                        <ul class="social">
+                          <li>
+                            <a [routerLink]="['/user/product/',product._id]" data-tip="Voir"><i
+                                class="fa fa-search"></i></a>
+                          </li>
+                          <li>
+                            <a (click)="removeProduct(product._id)" data-tip="Fermer"><i
+                                class="fa fa-times-circle text-success"></i></a>
+                          </li>
+                          <li>
+                            <a (click)="remove(product._id)" data-tip="Voir"><i class="fa fa-trash text-danger"></i></a>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Navbar -->
+</body>

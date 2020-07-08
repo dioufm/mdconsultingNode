@@ -29,7 +29,13 @@ export class AppComponent {
     private domSanitizer: DomSanitizer,
     private toastrService: ToastrService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    //default user
+    this.matIconRegistry.addSvgIcon(
+      "user_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/user_icon.svg")
+    );
 
+    //mmobilier
     this.matIconRegistry.addSvgIcon(
       "house_icon",
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/house_icon.svg")
@@ -45,6 +51,59 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon(
       "autre_icon",
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/autre_icon.svg")
+    );
+
+    //mmobilier
+    this.matIconRegistry.addSvgIcon(
+      "car_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/car_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "motos_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/motos_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "camion_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/camion_icon.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "boite_vitesse_manuelle",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/boite_vitesse_manuelle.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "boite_vitesse_automatique",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/boite_vitesse_automatique.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "diesel_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/diesel_icon.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "essence_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/essence_icon.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "two_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/two_icon.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "four_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/four_icon.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      "five_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/five_icon.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "seven_icon",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/icons/svg/seven_icon.svg")
     );
 
 

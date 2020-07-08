@@ -1,0 +1,111 @@
+<form class="contact100-form validate-form" [formGroup]="userForm" validate>
+
+  <!-- surface-->
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Nom *</span>
+    <div *ngIf="userForm.controls['user_name'].errors" class="text-danger">obligatoire</div>
+    <div class="input-group">
+      <input type="text" class="form-control" formControlName="user_name" placeholder="Nom">
+    </div>
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Prénom *</span>
+    <div *ngIf="userForm.controls['user_firstname'].errors" class="text-danger">obligatoire</div>
+    <div class="input-group">
+      <input type="text" class="form-control" formControlName="user_firstname" placeholder="Prénom">
+    </div>
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Téléphone *</span>
+    <div *ngIf="userForm.controls['tel'].errors" class="text-danger">obligatoire</div>
+    <div class="input-group">
+      <input type="text" class="form-control" formControlName="tel" placeholder="Téléphone">
+    </div>
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Masquer le numéro de téléphone ? </span>
+
+    <div class="contact100-form-radio m-t-15">
+      <input class="input-radio100" id="radio11" type="radio" formControlName="showTel" name="showTel" value="1"
+        checked="checked">
+      <label class="label-radio100" for="radio11">
+        Oui
+      </label>
+    </div>
+
+    <div class="contact100-form-radio">
+      <input class="input-radio100 form-control" id="radio22" type="radio" formControlName="showTel" name="showTel"
+        value="0">
+      <label class="label-radio100" for="radio22">
+        Non
+      </label>
+    </div>
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Téléphone WhatsApp</span>
+    <div *ngIf="userForm.controls['telwhatsapp'].errors" class="text-danger">obligatoire</div>
+    <div class="input-group">
+      <input type="text" class="form-control" formControlName="telwhatsapp" placeholder="Téléphone whartsApp">
+    </div>
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Masquer le numéro de téléphone whatsApp ? </span>
+
+    <div class="contact100-form-radio m-t-15">
+      <input class="input-radio100" id="radio1" type="radio" formControlName="showTelWhatsapp" name="showTelWhatsapp"
+        value="1" checked="checked">
+      <label class="label-radio100" for="radio1">
+        Oui
+      </label>
+    </div>
+
+    <div class="contact100-form-radio">
+      <input class="input-radio100 form-control" id="radio2" type="radio" formControlName="showTelWhatsapp"
+        name="showTelWhatsapp" value="0">
+      <label class="label-radio100" for="radio2">
+        Non
+      </label>
+    </div>
+
+
+  </div>
+
+  <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+    <span class="label-input100">Email *</span>
+    <div *ngIf="userForm.controls['email'].errors" class="text-danger">obligatoire</div>
+    <div class="input-group">
+      <input readonly type="text" class="form-control" formControlName="email" placeholder="adresse e-mail">
+    </div>
+  </div>
+
+  <div>
+    <!-- react-text: 1498 -->En validant la diffusion de mon annonce, j’accepte les
+    <!-- /react-text -->
+    <!-- react-text: 1499 -->
+    <!-- /react-text --><a href="https://www.leboncoin.fr/dc/cgu/" target="_blank" rel="noopener noreferrer">conditions
+      générales d’utilisation</a><!-- react-text: 1501 -->
+    <!-- /react-text -->
+    <!-- react-text: 1502 -->et les
+    <!-- /react-text -->
+    <!-- react-text: 1503 -->
+    <!-- /react-text --><a href="https://www.leboncoin.fr/dc/rules/" target="_blank" rel="noopener noreferrer">règles de
+      diffusion</a><!-- react-text: 1505 -->
+    <!-- /react-text -->
+    <!-- react-text: 1506 -->du site
+    <!-- /react-text --><b>leboncoin.fr</b><!-- react-text: 1508 --> et j’autorise
+    <!-- /react-text --><b>leboncoin</b><!-- react-text: 1510 --> à diffuser mon annonce.
+    <!-- /react-text -->
+  </div>
+
+
+</form>
+
+<div class="modal-footer  justify-content-center">
+  <button class="btn btn-danger" type="button" (click)="removeProduct(productId)">Annuler</button>
+  <button class="btn btn-primary" type="button" (click)="validateProduct()">Valider</button>
+</div>

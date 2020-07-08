@@ -28,7 +28,6 @@ import { LoginComponent } from './components/login/login.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { SignupComponent } from './components/signup/signup.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CreateProductComponent } from './components/product/createproduct.component';
@@ -49,15 +48,37 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 
 import { ToastrModule } from 'ngx-toastr';
 
+import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
-import { DateAgoPipe } from './pipe/date-ago.pipe';
 
-registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
+import { LOCALE_ID } from '@angular/core';
+import { DateAgoPipe } from './pipe/date-ago.pipe';
+import { CreateAnnonceComponent } from './components/product/createannonce/createannonce.component';
+import { ifCategorieImo } from './components/directive/immo.directive';
+import { ifCategorieVeh } from './components/directive/veh.directive';
+import { ThumbnailDirective } from './components/directive/thumbnail.directive';
+import { UserInfosComponent } from './components/user/user-infos/user-infos.component';
+import { MycurrencyPipe } from './pipe/currency.pipe';
+import { UserComponent } from './components/user/user/user.component';
+import { UserAdminComponent } from './components/user/user-admin/user-admin.component';
+import { UserMenuComponent } from './components/user/user-menu/user-menu.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminViewUserInfosComponent } from './components/user/user-admin/admin-view-user-infos/admin-view-user-infos.component';
+import { AdminViewCategorieComponent } from './components/user/user-admin/admin-view-categorie/admin-view-categorie.component';
+import { OrderByPipe } from './pipe/order-by.pipe';
+import { UserProductComponent } from './components/user/user-product/user-product.component';
+import { SearchProductComponent } from './components/home/search-product/search-product.component';
+
+registerLocaleData(localeFr, 'fr', localeFrExtra);
+
 
 
 const CONFIG = new AuthServiceConfig([
+  /*
   {
     id: GoogleLoginProvider.PROVIDER_ID,
     provider: new GoogleLoginProvider('815952117538-290ne08t0phn8tj95l1n6p0eptncht0p.apps.googleusercontent.com')
@@ -65,7 +86,7 @@ const CONFIG = new AuthServiceConfig([
   {
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider('840919589761249')
-  }
+  }*/
 ]);
 
 export function provideConfig() {
@@ -83,16 +104,33 @@ export function provideConfig() {
 
     LoginComponent,
     SignupComponent,
-    AdminComponent,
     CreateProductComponent,
     SubProductComponent,
+    CreateAnnonceComponent,
 
     AddStudentComponent,
     EditStudentComponent,
     StudentsListComponent,
 
+    AdminComponent,
+    AdminViewUserInfosComponent,
+    AdminViewCategorieComponent,
+    //user componenet
+    UserInfosComponent,
+    UserComponent,
+    UserAdminComponent,
+    UserMenuComponent,
+    UserProductComponent,
+    SearchProductComponent,
+
     FileSelectDirective,
-    DateAgoPipe
+    DateAgoPipe,
+    ThumbnailDirective,
+    MycurrencyPipe,
+    OrderByPipe,
+
+    ifCategorieImo,
+    ifCategorieVeh
   ],
   imports: [
     BrowserModule,
@@ -108,7 +146,10 @@ export function provideConfig() {
     SocialLoginModule,
     GalleryModule,
     LightboxModule,
-    ToastrModule.forRoot() // ToastrModule added
+    ToastrModule.forRoot(), // ToastrModule added
+    MatSelectModule,
+    MatFormFieldModule,
+    NgxMatSelectSearchModule
   ],
   entryComponents: [SubProductComponent],
   providers:

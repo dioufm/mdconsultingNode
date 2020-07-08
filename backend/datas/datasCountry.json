@@ -5,32 +5,82 @@
         "level": 1,
         "color": "green",
         "icon": "icon-senegal",
-        "regions": [
+        "villes": [
             {
-                "code": "DKR",
-                "name": "Dakar",
-                "departements": [
-                    {
-                        "code": "DKR",
-                        "name": "Dakar",
-                        "villes": [
-                            {
-                                "code": "GTFC",
-                                "name": "GUEULE TAPEE FASS COLOBANE"
-                            }
-                        ]
-                    },
-                    {
-                        "code": "GDW",
-                        "name": "Guédiawaye",
-                        "villes": [
-                            {
-                                "code": "GLS",
-                                "name": "GOLF SUD"
-                            }
-                        ]
-                    }
-                ]
+                "code": "BIS",
+                "name": "Biscuiterie"
+            },
+            {
+                "code": "CAM",
+                "name": "Cambérène"
+            },
+            {
+                "code": "DKP",
+                "name": "Dakar-Plateau"
+            },
+            {
+                "code": "DED",
+                "name": "Dieuppeul-Derklé"
+            },
+            {
+                "code": "FPA",
+                "name": "Fann-Point E-Amitié"
+            },
+            {
+                "code": "GOR",
+                "name": "Gorée"
+            },
+            {
+                "code": "GDK",
+                "name": "Grand Dakar"
+            },
+            {
+                "code": "GYF",
+                "name": "Grand Yoff"
+            },
+            {
+                "code": "GTF",
+                "name": "Gueule Tapée-Fass-Colobane"
+            },
+            {
+                "code": "HAB",
+                "name": "Hann Bel-Air"
+            },
+            {
+                "code": "HLM",
+                "name": "HLM"
+            },
+            {
+                "code": "MED",
+                "name": "Médina"
+            },
+            {
+                "code": "MSC",
+                "name": "Mermoz-Sacré-Cœur"
+            },
+            {
+                "code": "NGR",
+                "name": "Ngor"
+            },
+            {
+                "code": "OUA",
+                "name": "Ouakam"
+            },
+            {
+                "code": "PAS",
+                "name": "Parcelles Assainies"
+            },
+            {
+                "code": "PAD",
+                "name": "Patte d’Oie"
+            },
+            {
+                "code": "SIL",
+                "name": "Sicap-Liberté"
+            },
+            {
+                "code": "YOF",
+                "name": "Yoff"
             }
         ]
     }

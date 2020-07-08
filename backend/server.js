@@ -33,6 +33,7 @@ const db = require("./model");
 const Role = db.role;
 const Categorie = db.categorie;
 const Country = db.country;
+const Marque = db.marque;
 
 
 db.mongoose
@@ -45,6 +46,7 @@ db.mongoose
     initial();
     initialCategories();
     initialCountry();
+    initialMarques();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -61,6 +63,7 @@ app.get("/", (req, res) => {
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/product.routes")(app);
+require("./routes/categorie.routes")(app);
 require("./routes/upload.routes")(app);
 
 // POST File
@@ -88,7 +91,7 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-        name: "user"
+        name: "ROLE_USER"
       }).save(err => {
         if (err) {
           console.log("error", err);
@@ -98,7 +101,7 @@ function initial() {
       });
 
       new Role({
-        name: "moderator"
+        name: "ROLE_MODERATOR"
       }).save(err => {
         if (err) {
           console.log("error", err);
@@ -108,7 +111,7 @@ function initial() {
       });
 
       new Role({
-        name: "admin"
+        name: "ROLE_ADMIN"
       }).save(err => {
         if (err) {
           console.log("error", err);
@@ -154,7 +157,7 @@ function initialCategories() {
               level: 1
             }
           ],
-        typeLogements:
+        types:
           [
             {
               code: "MAI",
@@ -195,7 +198,7 @@ function initialCategories() {
           [
             {
               code: "VOT",
-              name: "Voitures",
+              name: "Voiture",
               level: 1
             },
             {
@@ -212,6 +215,29 @@ function initialCategories() {
               code: "EMO",
               name: "Équipement moto",
               level: 1
+            }
+          ],
+        types:
+          [
+            {
+              code: "VOI",
+              name: "Voiture",
+              icon: 'car_icon'
+            },
+            {
+              code: "MOS",
+              name: "Moto/Scooter",
+              icon: 'motos_icon'
+            },
+            {
+              code: "CAB",
+              name: "Camion/Bus",
+              icon: 'camion_icon'
+            },
+            {
+              code: "AUT",
+              name: "Autre",
+              icon: 'autre_icon'
             }
           ]
       }).save(err => {
@@ -488,6 +514,26 @@ function initialCountry() {
 
       countries.forEach(country => {
         new Country(country)
+          .save(err => {
+            if (err) {
+              console.log("error", err);
+            }
+          });
+      });
+    }
+  });
+}
+
+function initialMarques() {
+  Marque.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      let rawdata = fs.readFileSync('datas/datasvoituresmarques.json');
+      let marques = JSON.parse(rawdata);
+      console.log(marques);
+      //var datasCountry = JSON.parse(countries.data);
+
+      marques.forEach(marque => {
+        new Marque(marque)
           .save(err => {
             if (err) {
               console.log("error", err);

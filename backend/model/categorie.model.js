@@ -18,7 +18,7 @@ const Categorie = mongoose.model(
           icon: String
         }
       ],
-    typeLogements:
+    types:
       [
         {
           code: String,
