@@ -90,5 +90,31 @@ export class ProductService {
             .pipe(map(products => {
                 return products;
             }));
+
     }
+
+
+    getProductsByCriteria(searchProductCriteriaProduct) {
+
+        /*
+        let headers = new HttpHeaders();
+        if (searchProductCriteriaProduct.categorieProduct != null) {
+            headers = headers.append('categorieProduct', searchProductCriteriaProduct.categorieProduct);
+        }
+        if (searchProductCriteriaProduct.productName != null) {
+            headers = headers.append('productName', searchProductCriteriaProduct.productName);
+        }
+        return this.http.get<any>(`${environment.apiUrl}/products/search/`, { headers: headers })
+            .pipe(map(products => {
+                return products;
+            }));
+            */
+
+        return this.http.post<any>(`${environment.apiUrl}/products/search`, { searchProductCriteriaProduct })
+            .pipe(map(products => {
+                return products;
+            }));
+    }
+
+
 }

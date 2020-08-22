@@ -25,6 +25,10 @@ module.exports = function (app) {
 
   app.get("/api/products/user", controller.getProductByUser);
 
+
+  app.post("/api/products/search", controller.getProductsByCriteria);
+
+
   app.delete(
     "/api/product/delete",
     [authJwt.verifyToken],

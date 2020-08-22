@@ -6,7 +6,7 @@
     </h2>
 
     <div class="row">
-      <div *ngFor="let categorie of categories | orderBy: 'level': 'asc'" class="col-md-3 col-sm-6 col-12">
+      <div *ngFor="let categorie of categories | orderByCustom: 'level': 'asc'" class="col-md-3 col-sm-6 col-12">
         <div class="card shadow ">
           <div class="card-body">
             <div class="tab-content" id="myTabContent">

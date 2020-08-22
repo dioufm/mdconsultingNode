@@ -7,21 +7,27 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { ProductService } from '../../../services/product.service';
 import { environment } from 'src/environments/environment';
 import { CategorieService } from '../../../services/categorie.service';
-import { Categorie } from 'src/app/shared/categorie';
+import { Categorie } from '../../../shared/categorie';
 import { Product } from 'src/app/shared/product';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 
 
 
 @Component({
-  selector: 'search-product',
-  templateUrl: './search-product.component.html',
-  styleUrls: ['./search-product.component.css']
+  selector: 'search-product-header',
+  templateUrl: './search-product-header.component.html',
+  styleUrls: ['./search-product-header.component.css']
 })
-export class SearchProductCategorieComponent implements OnInit {
+export class SearchProductHeaderComponent implements OnInit {
   name = environment.application.name;
   angular = environment.application.angular;
   bootstrap = environment.application.bootstrap;
+
+  @Input() categorie: Categorie;
+
+  @Input() subCategorie: any;
+  @Output() notifySubCategorie: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() searchResult: any;
   @Output() notifySearchResult: EventEmitter<any> = new EventEmitter<any>();
@@ -29,30 +35,13 @@ export class SearchProductCategorieComponent implements OnInit {
   @Input() searchCriteria: Product;
   @Output() notifyFormCriteria: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() subCategorie: any;
-  @Output() notifySubCategorie: EventEmitter<any> = new EventEmitter<any>();
-
-  categorieCode;
-  subcategorieCode;
-  typeCode
-
-  categorie: Categorie;
-
-
-  products = [];
-
-  criteriaSearchProduct: Product;
 
   loading = false;
   error = null;
 
-  photos: GalleryItem[];
-
-  breadcrumbList: Array<any> = [];
-  index = 0;
-
-  ifShowTel = false;
   categories = [];
+
+  searchProductHeaderForm: FormGroup;
 
 
 
@@ -68,7 +57,7 @@ export class SearchProductCategorieComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private categorieService: CategorieService,
     private productService: ProductService,
-    private route: ActivatedRoute,
+    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     public gallery: Gallery, public lightbox: Lightbox) {
 
@@ -87,64 +76,86 @@ export class SearchProductCategorieComponent implements OnInit {
           ' Elle applique le Routing, le Lazy loading, le Server side rendering et les Progressive Web App (PWA)'
       });
 
-    this.route.params.subscribe((params) => {
-      this.categorieCode = params['categorie'];
-    });
-
-    this.route.params.subscribe((params) => {
-      this.subcategorieCode = params['subcategorie'];
-    });
-
-    this.route.params.subscribe((params) => {
-      this.typeCode = params['type'];
-    });
-
-    if (this.categorieCode != null) {
-      this.spinner.show();
-      this.categorieService.getCategorieByCode(this.categorieCode)
-        .subscribe(
-          data => {
-            this.categorie = data;
-            if (this.subcategorieCode != null && this.categorie != null) {
-              let subcategories = this.categorie.subcategories.filter(subCat => subCat.code == this.subcategorieCode);
-              this.subCategorie = subcategories != null ? subcategories[0] : null;
-            }
-          },
-          error => {
-            this.error = error;
-            this.loading = false;
-          });
-
-    }
-
-    this.criteriaSearchProduct = new Product();
-
-    this.criteriaSearchProduct.categorieProduct = this.categorieCode;
-    this.criteriaSearchProduct.subCategorieProduct = this.subcategorieCode;
-    this.criteriaSearchProduct.typeProduct = this.typeCode;
-    this.productService.getProductsByCriteria(this.criteriaSearchProduct)
+    this.categorieService.getAllCategories()
       .subscribe(
         data => {
-          this.products = data;
-          this.searchResult = this.products;
-          this.spinner.hide();
+          this.categories = data;
         },
         error => {
-          this.spinner.hide();
+          this.error = error;
+        });
+
+
+    this.searchProductHeaderForm = this.fb.group({
+      productName: ['', []],
+      categorieProduct: ['', []]
+    }, {});
+
+  }
+
+  /**
+    * search from home page 
+    */
+  search() {
+    //this.searchCriteria.offset = 0;
+    this.loadSearchData();
+
+  }
+
+  /**
+ * load Search Data : button search
+ */
+  loadSearchData() {
+    this.spinner.show();
+    this.searchCriteria = new Product(this.searchProductHeaderForm.value);
+    this.productService.getProductsByCriteria(this.searchCriteria)
+      .subscribe(
+        data => {
+          this.searchCallBack(data);
+        },
+        error => {
           this.error = error;
           this.loading = false;
         });
 
   }
 
+  /**
+  * search CallBack and export is disabled
+  * @param res 
+  */
+  searchCallBack(res: any) {
+    this.searchResult = res;
+    this.notifySearchResult.emit(this.searchResult);
+    this.spinner.hide();
+
+  }
+
+
   OnNotifySearchResult(searchResult: any): void {
-    this.products = searchResult;
+    this.searchResult = searchResult;
+  }
+
+  changeSubCategorie(subCategorie) {
+    this.searchCriteria = new Product();
+    this.searchCriteria.subCategorieProduct = subCategorie.code;
+    this.productService.getProductsByCriteria(this.searchCriteria)
+      .subscribe(
+        data => {
+          this.searchCallBack(data);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+
+    this.subCategorie = subCategorie;
+    this.notifySubCategorie.emit(this.subCategorie);
+
   }
 
   OnNotifySubCategorie(subCategorie: any): void {
     this.subCategorie = subCategorie;
   }
 
-
 }
-

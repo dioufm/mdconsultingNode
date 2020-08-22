@@ -187,3 +187,233 @@ body .push-right {
     visibility: visible !important;
   }
 }
+/*********************************
+4. Banner
+*********************************/
+
+.banner
+{
+	width: 100%;
+	padding-top: 68px;
+	padding-bottom: 83px;
+	overflow: hidden;
+}
+.banner_background
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+.banner_content
+{
+	z-index: 1;
+}
+.banner_text
+{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	line-height: 1.166;
+	color: #7599b2;
+	text-transform: uppercase;
+	letter-spacing: 0.038em;
+}
+
+.banner_price
+{
+	font-size: 30px;
+	color: #df3b3b;
+	margin-top: 87px;
+}
+.banner_price span
+{
+	display: inline-block;
+	position: relative;
+	color: #7e8285;
+	margin-right: 14px;
+}
+.banner_price span::after
+{
+	display: block;
+	position: absolute;
+	top: 21px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background: #8d8d8d;
+	content: '';
+}
+.banner_product_name
+{
+	font-size: 18px;
+	font-weight: 400;
+	color: #000000;
+	margin-top: 8px;
+}
+.banner_button
+{
+	margin-top: 42px;
+}
+.banner_product_image
+{
+	position: absolute;
+	top: -5px;
+	right: -52px;
+	z-index: 0;
+}
+
+.button
+{
+	display: inline-block;
+	background: #0e8ce4;
+	border-radius: 5px;
+	height: 48px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.button a
+{
+	display: block;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 48px;
+	color: #FFFFFF;
+	padding-left: 35px;
+	padding-right: 35px;
+}
+.button:hover
+{
+	opacity: 0.8;
+}
+
+/*# custom categorie color */
+
+/*Immobilier*/
+.IMO{
+  color: #fff;
+  background-color: #468abe;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+  text-align: center;
+}
+
+
+.LOC{
+  color: #fff;
+  background-color: #517edf;
+  border-color: #152633;
+  min-width: 150px;
+  min-height: 40px;
+  text-align: center;
+}
+
+.VTI{
+  color: #fff;
+  background-color: #3841c5;
+  border-color: #152633;
+  min-width: 150px;
+  min-height: 40px;
+}
+
+.BUC{
+  color: #fff;
+  background-color: #130597;
+  border-color: #152633;
+  min-width: 150px;
+  min-height: 40px;
+}
+
+.COL{
+  color: #fff;
+  background-color: #7592f1;
+  border-color: #152633;
+  min-width: 150px;
+  min-height: 40px;
+}
+
+/*Immobilier*/
+.VEH{
+  color: #fff;
+  background-color: #7bce2d;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+
+
+.MTM{
+  color: #fff;
+  background-color: #5c105f;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+
+.EMP{
+  color: #fff;
+  background-color: #153f27;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+
+.SVC{
+  color: #fff;
+  background-color: #410e23;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+.VAC{
+  color: #fff;
+  background-color: #ec1a1a;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+.MAS{
+  color: #fff;
+  background-color: #101825;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+.MOD{
+  color: #fff;
+  background-color: #ecd71a;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+.LOS{
+  color: #fff;
+  background-color: #281aec;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}
+.DIV{
+  color: #fff;
+  background-color: #525153;
+  border-color: #152633;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-width: 150px;
+  min-height: 40px;
+}

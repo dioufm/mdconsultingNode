@@ -66,7 +66,6 @@ export class CategorieService {
     }
 
     getCategorieByCode(categoriecode) {
-        const token = this.currentUser.accessToken;
         return this.http.get<any>(`${environment.apiUrl}/categorie/detailsbycode/`, { headers: { categoriecode: categoriecode } })
             .pipe(map(products => {
                 return products;

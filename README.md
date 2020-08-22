@@ -35,3 +35,25 @@ argon-design-system
   
 ==> base de donnée de amrque voiture 
 https://dyrk.org/2016/04/18/crawling-base-de-donnee-de-vehicule-a-jour/
+
+"mappings": {
+    "dynamic": true,
+    "fields": {
+      "products": {
+        "type": "document",
+        "fields": {
+          "titre": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "analyzer": "lucene.english"
+          }
+        }
+      }
+	   }
+	    }
+
+
+deploiement Docker :
+https://www.codeflow.site/fr/article/how-to-deploy-a-node-js-and-mongodb-application-with-rancher-on-ubuntu-14-04

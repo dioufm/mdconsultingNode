@@ -34,6 +34,7 @@ const Role = db.role;
 const Categorie = db.categorie;
 const Country = db.country;
 const Marque = db.marque;
+const Product = db.product;
 
 
 db.mongoose
@@ -47,6 +48,7 @@ db.mongoose
     initialCategories();
     initialCountry();
     initialMarques();
+    //initialIndex();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -132,28 +134,36 @@ function initialCategories() {
         code: "IMO",
         name: "Immobilier",
         level: 1,
-        color: "btn-primary",
+        color: "IMO",
         icon: "fas fa-home",
         subcategories:
           [
             {
               code: "LOC",
               name: "Location",
+              color: "LOC",
+              icon: "fas fa-home",
               level: 1
             },
             {
               code: "VTI",
               name: "Ventes immobilières",
+              color: "VTI",
+              icon: "fas fa-car",
               level: 1
             },
             {
               code: "BUC",
               name: "Bureaux & Commerces",
+              color: "BUC",
+              icon: "fas fa-home",
               level: 1
             },
             {
               code: "COL",
               name: "Colocation",
+              color: "COL",
+              icon: "fas fa-home",
               level: 1
             }
           ],
@@ -192,7 +202,7 @@ function initialCategories() {
         code: "VEH",
         name: "Véhicules",
         level: 1,
-        color: "btn-success",
+        color: "VEH",
         icon: "fas fa-car",
         subcategories:
           [
@@ -252,7 +262,7 @@ function initialCategories() {
         code: "MTM",
         name: "Multimédia",
         level: 1,
-        color: "btn-info",
+        color: "MTM",
         icon: "fas fa-mobile-alt",
         subcategories:
           [
@@ -294,7 +304,7 @@ function initialCategories() {
         code: "EMP",
         name: "Emploi",
         level: 1,
-        color: "btn-info",
+        color: "EMP",
         icon: "fa fa-briefcase",
         subcategories: [
           {
@@ -316,7 +326,7 @@ function initialCategories() {
         code: "SVC",
         name: "Services",
         level: 1,
-        color: "btn-info",
+        color: "SVC",
         icon: "fa fa-server",
         subcategories: [
           {
@@ -342,7 +352,7 @@ function initialCategories() {
         code: "VAC",
         name: "Vacances",
         level: 2,
-        color: "btn-info",
+        color: "VAC",
         icon: "fa fa-globe",
         subcategories: [
           {
@@ -369,7 +379,7 @@ function initialCategories() {
         code: "MAS",
         name: "Maison",
         level: 2,
-        color: "btn-info",
+        color: "MAS",
         icon: "fa fa-home",
         subcategories: [
           {
@@ -405,7 +415,7 @@ function initialCategories() {
         code: "MOD",
         name: "Mode",
         level: 2,
-        color: "btn-info",
+        color: "MOD",
         icon: "fa fa-female",
         subcategories: [
           {
@@ -442,7 +452,7 @@ function initialCategories() {
         code: "LOS",
         name: "Loisirs",
         level: 1,
-        color: "btn-info",
+        color: "LOS",
         icon: "fa fa-gamepad",
         subcategories: [
           {
@@ -483,7 +493,7 @@ function initialCategories() {
         code: "DIV",
         name: "Divers",
         level: 1,
-        color: "btn-info",
+        color: "DIV",
         icon: "fa fa-question-circle",
         subcategories: [
           {
@@ -502,6 +512,7 @@ function initialCategories() {
     }
   });
 }
+
 
 
 function initialCountry() {
@@ -542,4 +553,8 @@ function initialMarques() {
       });
     }
   });
+}
+
+function initialIndex() {
+  Product.createIndex({ titre: "text" });
 }

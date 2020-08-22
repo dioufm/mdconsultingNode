@@ -116,6 +116,7 @@ exports.updateUserInfos = (req, res) => {
   });
 }
 
+
 exports.validateUserInfos = (req, res) => {
 
   //update  user infos

@@ -261,6 +261,177 @@ exports.getProductByUser = (req, res) => {
 };
 
 
+exports.getProductsByCriteria = (req, res) => {
+  let query = {};
+
+  let queryHeader = {};
+  let productName = req.body.searchProductCriteriaProduct.productName;
+  let queryProductName = {};
+  if (productName != null && productName !== "") {
+    queryProductName = { "titre": { $regex: ".*" + productName + ".*" } };
+  }
+
+
+  let categorieName = req.body.searchProductCriteriaProduct.categorieProduct;
+  let queryCategorie = {};
+  if (categorieName != null && categorieName !== "") {
+    queryCategorie = { "categorie.code": categorieName };
+  }
+
+  let subCategorieProduct = req.body.searchProductCriteriaProduct.subCategorieProduct;
+  let querrySubCategorieProduct = {};
+  if (subCategorieProduct != null && subCategorieProduct !== "") {
+    querrySubCategorieProduct =
+      { "categorie.subcategories.code": subCategorieProduct };
+  }
+
+  /*
+   this.criteriaSearchProduct.subCategorieProduct = this.subcategorieCode;
+   this.criteriaSearchProduct.typeProduct = this.typeCode;
+ */
+  //Aside
+  let prixMax = req.body.searchProductCriteriaProduct.prixMax;
+  let queryPrixMax = {};
+  if (prixMax != null && prixMax !== "") {
+    queryPrixMax = { prix: { $lte: prixMax } };
+  }
+
+  let prixMin = req.body.searchProductCriteriaProduct.prixMin;
+  if (prixMin != null && prixMin !== "") {
+    queryPrixMin = { prix: { $gte: prixMin } };
+  }
+
+  //header
+  if (categorieName != null) {
+    queryHeader = queryCategorie;
+
+    if (productName != null && productName !== "") {
+      queryHeader = { queryCategorie, queryProductName };
+    }
+  } else {
+    if (productName != null) {
+      queryHeader = queryProductName;
+    }
+  }
+
+  //Aside
+  let queryAside = {};
+  if (prixMax != null && prixMax !== "") {
+    queryAside = queryPrixMax;
+
+    if (prixMin != null && prixMin !== "") {
+      queryAside = { $and: [queryPrixMax, queryPrixMin] };
+    }
+  } else {
+    if (prixMin != null && prixMin !== "") {
+      queryAside = queryPrixMin;
+    }
+  }
+
+
+  query = { $and: [queryHeader, queryAside, querrySubCategorieProduct] };
+
+
+  Product.find(query, function (err, products) {
+    productResult = products;
+    if (productResult != null) {
+      productResult.forEach(function (product) {
+        product.photos.forEach(function (photo) {
+          var imgdata = btoa(photo.data);
+          var img = "data:image/" + photo.contentType.substring(1, 5) + ";base64," + imgdata;
+          photo.imageUrl = img;
+          photo.data = null;
+        });
+      });
+      res.status(200).send(products);
+    }
+  });
+
+  /*
+  let productResult;
+  //if categorie criteria set
+  if (req.headers.categorieproduct != null) {
+    if (req.headers.productname != null) {
+      //categori and other criteria
+      Product.find({ $and: [,  ] }, function (err, products) {
+        productResult = products;
+        if (productResult != null) {
+          productResult.forEach(function (product) {
+            product.photos.forEach(function (photo) {
+              var imgdata = btoa(photo.data);
+              var img = "data:image/" + photo.contentType.substring(1, 5) + ";base64," + imgdata;
+              photo.imageUrl = img;
+              photo.data = null;
+            });
+          });
+          res.status(200).send(products);
+        }
+      });
+    } else {
+      //only categorie
+      Product.find({ "categorie.code": req.headers.categorieproduct }, function (err, products) {
+        productResult = products;
+        if (productResult != null) {
+          productResult.forEach(function (product) {
+            product.photos.forEach(function (photo) {
+              var imgdata = btoa(photo.data);
+              var img = "data:image/" + photo.contentType.substring(1, 5) + ";base64," + imgdata;
+              photo.imageUrl = img;
+              photo.data = null;
+            });
+          });
+          res.status(200).send(products);
+        }
+      });
+    }
+ 
+  } else {
+    //no categori set
+    if (req.headers.productname != null) {
+      let query = { $regex: ".*" + req.headers.productname + ".*" };
+      if (req.headers.productname == "") {
+        Product.find({}, function (err, products) {
+          productResult = products;
+          if (productResult != null) {
+            productResult.forEach(function (product) {
+              product.photos.forEach(function (photo) {
+                var imgdata = btoa(photo.data);
+                var img = "data:image/" + photo.contentType.substring(1, 5) + ";base64," + imgdata;
+                photo.imageUrl = img;
+                photo.data = null;
+              });
+            });
+            res.status(200).send(products);
+          }
+        });
+      }
+      /*
+       Product.find({
+         "text": {
+           "query": req.headers.productname,
+         }
+       }, function (err, products) {
+         */
+  //Product.find({ "titre": /req.headers.productname/ }, function (err, products) {
+  /*
+Product.find({ "titre": query }, function (err, products) {
+  productResult = products;
+  if (productResult != null) {
+    productResult.forEach(function (product) {
+      product.photos.forEach(function (photo) {
+        var imgdata = btoa(photo.data);
+        var img = "data:image/" + photo.contentType.substring(1, 5) + ";base64," + imgdata;
+        photo.imageUrl = img;
+        photo.data = null;
+      });
+    });
+    res.status(200).send(products);
+  }
+});
+}*/
+};
+
+
 
 
 

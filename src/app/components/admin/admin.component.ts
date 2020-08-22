@@ -1,15 +1,9 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher, ThemePalette } from '@angular/material/core';
 //import { environment } from '../../../../environments/environment';
 //import { ReportService } from 'src/app/services/report/report.service';
-import { Router, ActivatedRoute } from '@angular/router';
-//import { CommonService } from 'src/app/services/common/common.service';
-import { environment } from 'src/environments/environment';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ErrorStateMatcher, ThemePalette } from '@angular/material/core';
-import { ApiService } from 'src/app/shared/api.service';
-import { first } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 

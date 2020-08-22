@@ -1,0 +1,201 @@
+<section class="search-sec ">
+  <form [formGroup]="searchProductAsideForm" (ngSubmit)="search()" validate>
+    <div class="row">
+      <div [ngClass]="getClass(categorie)">
+        <article class="card-group-item ">
+          <div class="filter-content">
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label>Prix Min.</label>
+                  <input type="number" class="form-control" formControlName="prixMin" id="prixMin" placeholder="0">
+                </div>
+                <div class="form-group col-md-12">
+                  <label>Prix Max.</label>
+                  <input type="number" class="form-control" formControlName="prixMax" placeholder="100 000 CFA">
+                </div>
+              </div>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-primary wrn-btn" [disabled]="!searchProductAsideForm.valid"
+                  (click)="search()">Search</button>
+              </span>
+            </div> <!-- card-body.// -->
+          </div>
+        </article> <!-- card-group-item.// -->
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Categories</h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <div *ngFor="let categorie of categoriesFilterResult | orderBy: 'level': 'desc'"
+                class="custom-control custom-checkbox">
+                <span class="float-right badge badge-light round">{{categorie.count}}</span>
+
+                <label class="form-check">
+                  <input class="form-check-input" type="checkbox" name="categorie" id="{{categorie.name}}"
+                    (change)="onFilterCategorieChange(categorie.code)">
+                  <i class="btn-sm {{categorie.color}} fas {{categorie.icon}}"></i> <span class="form-check-label">
+                    {{categorie.name}}
+                  </span>
+                </label>
+              </div>
+            </div> <!-- card-body.// -->
+          </div>
+        </article> <!-- card-group-item.// -->
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Sous categories</h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <div *ngFor="let sousCategorie of sousCategoriesFilterResult | orderBy: 'level': 'desc'"
+                class="custom-control custom-checkbox">
+                <span class="float-right badge badge-light round">{{sousCategorie.count}}</span>
+
+                <label class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadio" id="{{sousCategorie.name}}"
+                    (change)="onFilterCategorieChange(sousCategorie.code)">
+                  <i class="btn-sm {{sousCategorie.color}} fas {{sousCategorie.icon}}"></i> <span
+                    class="form-check-label">
+                    {{sousCategorie.name}}
+                  </span>
+                </label>
+              </div>
+            </div> <!-- card-body.// -->
+          </div>
+        </article> <!-- card-group-item.// -->
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Types</h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <div *ngFor="let type of typesFilterResult | orderBy: 'level': 'desc'"
+                class="custom-control custom-checkbox">
+                <span class="float-right badge badge-light round">{{type.count}}</span>
+
+                <label class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadio" id="{{type.name}}"
+                    (change)="onFilterCategorieChange(type.code)">
+                  <i class="btn-sm {{type.color}} fas {{type.icon}}"></i> <span class="form-check-label">
+                    {{type.name}}
+                  </span>
+                </label>
+              </div>
+            </div> <!-- card-body.// -->
+          </div>
+        </article> <!-- card-group-item.// -->
+
+        <!--
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Brands </h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <form>
+                <label class="form-check">
+                  <input class="form-check-input" type="checkbox" value="">
+                  <span class="form-check-label">
+                    Mersedes Benz
+                  </span>
+                </label>
+                <label class="form-check">
+                  <input class="form-check-input" type="checkbox" value="">
+                  <span class="form-check-label">
+                    Nissan Altima
+                  </span>
+                </label> 
+                <label class="form-check">
+                  <input class="form-check-input" type="checkbox" value="">
+                  <span class="form-check-label">
+                    Another Brand
+                  </span>
+                </label> 
+              </form>
+
+            </div> 
+          </div>
+        </article> 
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Choose type </h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <label class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadio" value="">
+                <span class="form-check-label">
+                  First hand items
+                </span>
+              </label>
+              <label class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadio" value="">
+                <span class="form-check-label">
+                  Brand new items
+                </span>
+              </label>
+              <label class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadio" value="">
+                <span class="form-check-label">
+                  Some other option
+                </span>
+              </label>
+            </div> 
+          </div>
+        </article>
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Similar category </h6>
+          </header>
+          <div class="filter-content">
+            <div class="list-group list-group-flush">
+              <a href="#" class="list-group-item">Cras justo odio <span
+                  class="float-right badge badge-light round">142</span> </a>
+              <a href="#" class="list-group-item">Dapibus ac facilisis <span
+                  class="float-right badge badge-light round">3</span> </a>
+              <a href="#" class="list-group-item">Morbi leo risus <span
+                  class="float-right badge badge-light round">32</span> </a>
+              <a href="#" class="list-group-item">Another item <span
+                  class="float-right badge badge-light round">12</span>
+              </a>
+            </div> 
+          </div>
+        </article> 
+
+        <article class="card-group-item">
+          <header class="card-header">
+            <h6 class="title">Color check</h6>
+          </header>
+          <div class="filter-content">
+            <div class="card-body">
+              <label class="btn btn-danger">
+                <input class="" type="checkbox" name="myradio" value="">
+                <span class="form-check-label">Red</span>
+              </label>
+              <label class="btn btn-success">
+                <input class="" type="checkbox" name="myradio" value="">
+                <span class="form-check-label">Green</span>
+              </label>
+              <label class="btn btn-primary">
+                <input class="" type="checkbox" name="myradio" value="">
+                <span class="form-check-label">Blue</span>
+              </label>
+            </div> 
+          </div>
+        </article> 
+
+-->
+
+      </div> <!-- card.// -->
+    </div>
+
+  </form>
+</section>

@@ -6,6 +6,7 @@ import { User } from './shared/user';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,8 @@ export class AppComponent {
     private authenticationService: AuthenticationService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private toastrService: ToastrService) {
+    private toastrService: ToastrService,
+    private spinner: NgxSpinnerService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     //default user
     this.matIconRegistry.addSvgIcon(
@@ -112,7 +114,13 @@ export class AppComponent {
 
   ngOnInit() {
 
-    console.log(window.innerWidth)
+    /** spinner starts on init */
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 100);
     /*
     if (window.innerWidth < 768) {
       this.sidenav.fixedTopGap = 55;

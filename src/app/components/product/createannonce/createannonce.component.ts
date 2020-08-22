@@ -127,7 +127,7 @@ export class CreateAnnonceComponent implements OnInit {
       newProduct: ['1', [Validators.required]],
       categorieProduct: ['', [Validators.required]],
       subCategorieProduct: ['', [Validators.required]],
-      typeProduct: ['', [Validators.required]],
+      typeProduct: ['', []],
 
       // immobilier
       surface: ['', []],
@@ -150,11 +150,11 @@ export class CreateAnnonceComponent implements OnInit {
       ville2: ['', []],
 
       //users infos final validation
-      user_firstname: ['firstNameTest', [Validators.required]],
-      user_name: ['nameTest', [Validators.required]],
-      email: ['teste2@teste2.fr', [Validators.required]],
-      tel: ['00221584756', [Validators.required]],
-      telwhatsapp: ['00221584756', [Validators.required]],
+      user_firstname: ['firstNameTest', []],
+      user_name: ['nameTest', []],
+      email: ['teste2@teste2.fr', []],
+      tel: ['00221584756', []],
+      telwhatsapp: ['00221584756', []],
       showTel: ['0', []],
       showTelWhatsapp: ['0', []]
 
@@ -197,18 +197,15 @@ export class CreateAnnonceComponent implements OnInit {
     this.f['categorieProduct'].setValue(this.categorieCode);
     this.f['subCategorieProduct'].setValue(this.subCategorieCode);
 
-    this.f['user_name'].setValue(this.currentUser.username);
-    this.f['email'].setValue(this.currentUser.email);
-
-    if (this.currentUser.firstname != null) {
+    if (this.currentUser != null) {
+      this.f['user_name'].setValue(this.currentUser.username);
+      this.f['email'].setValue(this.currentUser.email);
       this.f['user_firstname'].setValue(this.currentUser.firstname);
-    }
-    if (this.currentUser.tel != null) {
       this.f['tel'].setValue(this.currentUser.tel);
-    }
-    if (this.currentUser.telwhatsapp != null) {
       this.f['telwhatsapp'].setValue(this.currentUser.telwhatsapp);
     }
+
+
 
     this.productService.getCountry()
       .subscribe(

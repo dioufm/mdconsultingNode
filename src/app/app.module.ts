@@ -15,6 +15,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 /* Angular 8 http service */
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 /* Angular 8 CRUD services */
 import { ApiService } from './shared/api.service';
@@ -47,6 +48,8 @@ import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 
 import { ToastrModule } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -71,7 +74,10 @@ import { AdminViewUserInfosComponent } from './components/user/user-admin/admin-
 import { AdminViewCategorieComponent } from './components/user/user-admin/admin-view-categorie/admin-view-categorie.component';
 import { OrderByPipe } from './pipe/order-by.pipe';
 import { UserProductComponent } from './components/user/user-product/user-product.component';
-import { SearchProductComponent } from './components/home/search-product/search-product.component';
+import { SearchProductHeaderComponent } from './components/home/search-product-header/search-product-header.component';
+import { SearchProductAsideComponent } from './components/home/search-product-aside/search-product-aside.component';
+import { SearchProductCategorieComponent } from './components/home/search-product/search-product.component';
+import { ProductResultComponent } from './components/product/productresult/productresult.component';
 
 registerLocaleData(localeFr, 'fr', localeFrExtra);
 
@@ -121,7 +127,10 @@ export function provideConfig() {
     UserAdminComponent,
     UserMenuComponent,
     UserProductComponent,
-    SearchProductComponent,
+    SearchProductHeaderComponent,
+    SearchProductAsideComponent,
+    SearchProductCategorieComponent,
+    ProductResultComponent,
 
     FileSelectDirective,
     DateAgoPipe,
@@ -149,7 +158,10 @@ export function provideConfig() {
     ToastrModule.forRoot(), // ToastrModule added
     MatSelectModule,
     MatFormFieldModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    NgxSpinnerModule,
+    NgxPaginationModule,
+    OrderModule
   ],
   entryComponents: [SubProductComponent],
   providers:

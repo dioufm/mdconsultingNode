@@ -14,6 +14,7 @@ import { UserAdminComponent } from './components/user/user-admin/user-admin.comp
 import { AdminViewUserInfosComponent } from './components/user/user-admin/admin-view-user-infos/admin-view-user-infos.component';
 import { AdminViewCategorieComponent } from './components/user/user-admin/admin-view-categorie/admin-view-categorie.component';
 import { UserProductComponent } from './components/user/user-product/user-product.component';
+import { SearchProductCategorieComponent } from './components/home/search-product/search-product.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'app-home' },
@@ -33,6 +34,13 @@ const routes: Routes = [
 
   { path: 'user/:page', component: UserComponent },
   { path: 'user/product/:productId', component: UserProductComponent },
+
+
+  { path: 'categorie/:categorie', component: SearchProductCategorieComponent },
+  { path: 'subcategorie/:categorie/:subcategorie', component: SearchProductCategorieComponent },
+
+
+  { path: 'type/:type', component: SearchProductCategorieComponent },
 
 
   { path: 'add-student', component: AddStudentComponent },

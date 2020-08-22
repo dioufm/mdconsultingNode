@@ -5,6 +5,7 @@ export class Categorie {
    level: number;
    color: string;
    icon: string;
+   subcategories: any;
 
    public constructor(init?: Partial<Categorie>) {
       Object.assign(this, init);

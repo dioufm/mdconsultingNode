@@ -26,6 +26,10 @@ export class Product {
    user: User;
    productCaracteritiques: any;
 
+   productName: string;
+   prixMin: number;
+   prixMax: number;
+
    public constructor(init?: Partial<Product>) {
       Object.assign(this, init);
    }
