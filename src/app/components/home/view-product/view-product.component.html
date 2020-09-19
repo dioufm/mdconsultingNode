@@ -12,24 +12,34 @@
       <span class="span-50"></span>
       <span class="span-100"></span>
     </div>
-    <div class="container" *ngIf="product != null && product.categorie!= null">
+    <div class="container" *ngIf="product != null && product.categorie != null">
       <!-- breadcrumb -->
       <div class="col">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" [class.active]="false">
-            <a [routerLink]="['/categorie/',product.categorie.code]">
-              <i class="fas {{product.categorie.icon}}"></i>
-              {{product.categorie.name}}
+            <a [routerLink]="['/categorie/', product.categorie.code]">
+              <i class="fas {{ product.categorie.icon }}"></i>
+              {{ product.categorie.name }}
             </a>
           </li>
           <li class="breadcrumb-item" [class.active]="false">
-            <a [routerLink]="['/subcategorie/',product.categorie.code,product.categorie.subcategories[0].code]">
-              {{ product.categorie.subcategories[0].name}}
+            <a
+              [routerLink]="[
+                '/subcategorie/',
+                product.categorie.code,
+                product.categorie.subcategories[0].code
+              ]"
+            >
+              {{ product.categorie.subcategories[0].name }}
             </a>
           </li>
-          <li *ngIf="product.categorie.types.length > 0" class="breadcrumb-item" [class.active]="false">
-            <a [routerLink]="['/type/',product.categorie.types[0].name]">
-              {{ product.categorie.types[0].name}}
+          <li
+            *ngIf="product.categorie.types.length > 0"
+            class="breadcrumb-item"
+            [class.active]="false"
+          >
+            <a [routerLink]="['/type/', product.categorie.types[0].name]">
+              {{ product.categorie.types[0].name }}
             </a>
           </li>
         </ol>
@@ -37,139 +47,234 @@
       <!-- breadcrumb -->
       <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-12">
-          <div class="alert {{product.categorie.color}}" role="alert">
-            {{product.titre}} :
+          <div class="alert {{ product.categorie.color }}" role="alert">
+            {{ product.titre }} :
             <span class="heading-title text-default mb-0">
-              {{product.prix | currency:'XOF':'symbol':'3.0-0':'fr'}}
+              {{ product.prix | currency: "XOF":"symbol":"3.0-0":"fr" }}
             </span>
 
-            <span class="title float-right"> {{product.dateCreation |date: 'dd/MM/yyyy HH:mm:ss'}} (<span
-                class="product-discount-label"><i
-                  class="far fa-clock"></i>{{product.dateCreation | dateAgo}}</span>)</span>
+            <span class="title float-right">
+              {{ product.dateCreation | date: "dd/MM/yyyy HH:mm:ss" }} (<span
+                class="product-discount-label"
+                ><i class="far fa-clock"></i
+                >{{ product.dateCreation | dateAgo }}</span
+              >)</span
+            >
           </div>
           <gallery [items]="photos" [counter]="false"></gallery>
         </div>
         <div class="col-lg-5 col-md-5 col-sm-12">
-
-          <div class="card ">
+          <div class="card">
             <div class="card-header bg-light">
               <table>
                 <tr>
                   <td>
-                    <img *ngIf="product.userdata.photo !=null" class="pic-1 rounded-circle"
-                      [src]="product.userdata.photo.imageUrl" width="50px" height="50px">
-                    <label *ngIf="product.userdata.photo ==null">
-                      <mat-icon svgIcon='user_icon'></mat-icon>
+                    <img
+                      *ngIf="product.userdata.photo != null"
+                      class="pic-1 rounded-circle"
+                      [src]="product.userdata.photo.imageUrl"
+                      width="50px"
+                      height="50px"
+                    />
+                    <label *ngIf="product.userdata.photo == null">
+                      <mat-icon svgIcon="user_icon"></mat-icon>
                     </label>
                   </td>
                   <td>
-                    {{product.userdata.username}}
-                    <p> Membre depuis {{product.userdata.dateCreation | dateAgo}} <br>
-                      {{product.userdata.numberproduct}}
+                    {{ product.userdata.username }}
+                    <p>
+                      Membre depuis
+                      {{ product.userdata.dateCreation | dateAgo }} <br />
+                      {{ product.userdata.numberproduct }}
                       annonce(s) publié(s)
                     </p>
                   </td>
                 </tr>
               </table>
-
-
             </div>
             <div class="description pl-4">
-              <h5 class="title">Biens: </h5>
-              <div class="wrap-input100" *ngIf="product.categorie.types?.length > 0"
-                [categorie]="product.categorie.code">
+              <h5 class="title">Biens:</h5>
+              <div
+                class="wrap-input100"
+                *ngIf="product.categorie.types?.length > 0"
+                [categorie]="product.categorie.code"
+              >
                 <ul>
                   <li>
                     <div class="form-group col-md-12">
                       <div *ngFor="let type of product.categorie.types">
                         <label>
-                          <mat-icon svgIcon="{{type.icon}}"></mat-icon>
-                          {{type.name}}
+                          <mat-icon svgIcon="{{ type.icon }}"></mat-icon>
+                          {{ type.name }}
                         </label>
                       </div>
                     </div>
                   </li>
                   <li>
                     <span>
-                      <i class="fa fa-map-marker" aria-hidden="true"></i> {{product.villeName}}
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      {{ product.villeName }}
                     </span>
                   </li>
                 </ul>
               </div>
-              <h5 class="title">Caracteristiques: </h5>
+              <h5 class="title">Caracteristiques:</h5>
               <!-- vehicules-->
-              <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieVeh
-                [categorie]="product.categorie.code">
+              <div
+                class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100"
+                ifCategorieVeh
+                [categorie]="product.categorie.code"
+              >
                 <ul>
                   <li>
-                    <span class="label-input100">Marque : {{product.marque}}</span>
+                    <span class="label-input100"
+                      >Marque : {{ product.marque }}</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Modéle : {{product.modele}}</span>
+                    <span class="label-input100"
+                      >Modéle : {{ product.modele }}</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Kilométrage : {{product.km}} km</span>
+                    <span class="label-input100"
+                      >Kilométrage : {{ product.km }} km</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Boite de vitesse :
-                      {{product.boiteVitesse == 'MANU' ? 'Manuelle' : 'Automatique'}}</span>
+                    <span class="label-input100"
+                      >Boite de vitesse :
+                      {{
+                        product.boiteVitesse == "MANU"
+                          ? "Manuelle"
+                          : "Automatique"
+                      }}</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Carburant :
-                      {{product.carburant == 'ESS'? 'Esssence' :  'Diesel'}}</span>
+                    <span class="label-input100"
+                      >Carburant :
+                      {{
+                        product.carburant == "ESS" ? "Esssence" : "Diesel"
+                      }}</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Nombre de place : {{product.nbPlaces}}</span>
+                    <span class="label-input100"
+                      >Nombre de place : {{ product.nbPlaces }}</span
+                    >
                   </li>
                 </ul>
               </div>
               <!-- Immobilier-->
-              <div class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100" ifCategorieImo
-                [categorie]="product.categorie.code">
+              <div
+                class="wrap-input100 validate-input bg1 rs1-wrap-thirdinput100"
+                ifCategorieImo
+                [categorie]="product.categorie.code"
+              >
                 <ul>
                   <li>
-                    <span class="label-input100">Surface : {{product.surface}} m²</span>
+                    <span class="label-input100"
+                      >Surface : {{ product.surface }} m²</span
+                    >
                   </li>
                   <li>
-                    <span class="label-input100">Nombre de pieces : {{product.nbPieces}}</span>
+                    <span class="label-input100"
+                      >Nombre de pieces : {{ product.nbPieces }}</span
+                    >
                   </li>
                 </ul>
               </div>
-              <h5 class="title">Description: </h5>
-              <p> {{product.description}}</p>
+              <h5 class="title">Description:</h5>
+              <p>{{ product.description }}</p>
             </div>
-
           </div>
-          <br>
+          <br />
           <div class="card bg-light">
-            <div class="span1">
-
-
-            </div>
-
-            <div class="span3">
+            <div class="span3" *ngIf="!ifSendMessage">
               <ul class="list-group list-group-flush">
-                <li *ngIf="!ifShowTel && product.userdata != null &&  product.user[0]!= null && product.userdata.tel"
-                  class="list-group-item">
-
-                  <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                    data-target="#modal-default" (click)="showTel()"> <i class="fa fa-phone"></i> Voir le
-                    téléphone</button>
-
+                <li
+                  *ngIf="
+                    !ifShowTel &&
+                    product.userdata != null &&
+                    product.user[0] != null &&
+                    product.userdata.tel
+                  "
+                  class="list-group-item"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-block"
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                    (click)="showTel()"
+                  >
+                    <i class="fa fa-phone"></i> Voir le téléphone
+                  </button>
                 </li>
                 <li *ngIf="ifShowTel" class="list-group-item">
-                  <button type="button" class="btn btn-block" data-toggle="modal" data-target="#modal-default"> <i
-                      class="fa fa-phone"></i> {{product.userdata.tel}} <i class="fa fa-whatsapp"
-                      aria-hidden="true"></i> {{product.userdata.telwhatsapp}}
+                  <button
+                    type="button"
+                    class="btn btn-block"
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                  >
+                    <i class="fa fa-phone"></i> {{ product.userdata.tel }}
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    {{ product.userdata.telwhatsapp }}
                   </button>
                 </li>
 
                 <li class="list-group-item">
-                  <button type="button" class="btn btn-default btn-block" data-toggle="modal"
-                    data-target="#modal-default"> <i class="fa fa-envelope" aria-hidden="true"></i> Envoyer un
-                    message</button>
+                  <button
+                    type="button"
+                    class="btn btn-default btn-block"
+                    (click)="startSendMessageProduct()"
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                  >
+                    <i class="fa fa-envelope" aria-hidden="true"></i> Envoyer un
+                    message
+                  </button>
                 </li>
               </ul>
+            </div>
+            <div class="span3" *ngIf="ifSendMessage">
+              <form
+                class="contact100-form validate-form"
+                [formGroup]="productForm"
+                (ngSubmit)="sendMessageProduct()"
+              >
+                <div
+                  class="wrap-input100 validate-input bg0 rs1-alert-validate"
+                >
+                  <span class="label-input100">Description de l'annonce *</span>
+                  <div
+                    *ngIf="productForm.controls['message'].errors"
+                    class="text-danger"
+                  >
+                    obligatoire
+                  </div>
+                  <textarea
+                    class="form-control"
+                    name="message"
+                    formControlName="message"
+                    rows="10"
+                    cols="33"
+                    placeholder="Bonjour, ce bien est-il toujours disponible..."
+                  ></textarea>
+                </div>
+              </form>
+              <br />
+              <button
+                type="button"
+                class="btn btn-default btn-block"
+                (click)="sendMessageProduct()"
+                data-toggle="modal"
+                data-target="#modal-default"
+              >
+                <i class="fa fa-envelope" aria-hidden="true"></i> Envoyer
+              </button>
             </div>
           </div>
         </div>

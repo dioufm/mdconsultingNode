@@ -67,7 +67,6 @@ const Product = mongoose.model(
     userdata:
     {
       username: String,
-      email: String,
       password: String,
       firstname: String,
       email: String,

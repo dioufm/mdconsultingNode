@@ -5,7 +5,11 @@ import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProductService } from '../../../services/product.service';
-import { environment } from 'src/environments/environment';
+
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { User } from '../../../../app/shared/user';
+import { ToastrService } from 'ngx-toastr';
+import { MessageService } from '../../../services/message.service';
 
 
 
@@ -15,9 +19,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./view-product.component.css']
 })
 export class ViewProductComponent implements OnInit {
-  name = environment.application.name;
-  angular = environment.application.angular;
-  bootstrap = environment.application.bootstrap;
 
   productId;
   product = {};
@@ -31,6 +32,12 @@ export class ViewProductComponent implements OnInit {
   index = 0;
 
   ifShowTel = false;
+
+  ifSendMessage = false;
+
+  productForm: FormGroup;
+
+  currentUser: User;
 
 
 
@@ -46,6 +53,9 @@ export class ViewProductComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private productService: ProductService,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private messageService: MessageService,
     public gallery: Gallery, public lightbox: Lightbox) {
 
   }
@@ -62,6 +72,8 @@ export class ViewProductComponent implements OnInit {
         content: 'Cette application a été développée avec angular version 8.2.12 et bootstrap ' +
           ' Elle applique le Routing, le Lazy loading, le Server side rendering et les Progressive Web App (PWA)'
       });
+
+    this.currentUser = this.authenticationService.currentUserValue;
 
     this.productId = this.route.snapshot.paramMap.get("productId");
 
@@ -81,11 +93,56 @@ export class ViewProductComponent implements OnInit {
           this.error = error;
           this.loading = false;
         });
+
+    this.productForm = this.fb.group({
+
+      message: ['Bonjour, ce bien est-il toujours disponible ?', [Validators.required]],
+
+
+    }, {});
   }
+
+  get f() { return this.productForm.controls; }
 
   showTel() {
     this.ifShowTel = true;
   }
 
+  startSendMessageProduct() {
+    if (this.currentUser != null) {
+      this.ifSendMessage = true;
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+  }
+
+
+  sendMessageProduct() {
+    if (this.currentUser != null) {
+      this.messageService.createMessage(this.f['message'].value, this.currentUser.id, this.productId)
+        .subscribe(
+          data => {
+            if (data != null) {
+              this.toastr.success(this.error);
+            }
+          },
+          error => {
+            this.error = error;
+            this.loading = false;
+            this.toastr.error(this.error);
+          });
+      this.ifSendMessage = false;
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+  }
+
+  sendMessage(message, userId) {
+
+
+
+  }
 
 }

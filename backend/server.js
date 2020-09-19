@@ -2,23 +2,23 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./database/db");
-const fs = require('fs');
+const fs = require("fs");
 
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Your Account Sid and Auth Token from twilio.com/console
 // DANGER! This is insecure. See http://twil.io/secure
-const accountSid = 'AC29e0da17aaf1c492375d2a19d355ac6e';
-const authToken = 'e333785147d12a4508ade9fb2b07edfc';
-const client = require('twilio')(accountSid, authToken);
+const accountSid = "AC29e0da17aaf1c492375d2a19d355ac6e";
+const authToken = "e333785147d12a4508ade9fb2b07edfc";
+const client = require("twilio")(accountSid, authToken);
 
-const multer = require('multer');
+const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
-const MongoGridFSStore = require('mongo-gridfs-storage');
+const MongoGridFSStore = require("mongo-gridfs-storage");
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8082"
+  origin: "http://localhost:8082",
 };
 
 app.use(cors(corsOptions));
@@ -36,11 +36,10 @@ const Country = db.country;
 const Marque = db.marque;
 const Product = db.product;
 
-
 db.mongoose
   .connect(dbConfig.db, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
@@ -50,7 +49,7 @@ db.mongoose
     initialMarques();
     //initialIndex();
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("Connection error", err);
     process.exit();
   });
@@ -60,13 +59,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-
 // routes
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/product.routes")(app);
 require("./routes/categorie.routes")(app);
 require("./routes/upload.routes")(app);
+require("./routes/message.routes")(app);
 
 // POST File
 //app.post('/api/upload', upload.single('image'));
@@ -75,7 +74,6 @@ require("./routes/upload.routes")(app);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
-
 });
 
 /*
@@ -93,8 +91,8 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-        name: "ROLE_USER"
-      }).save(err => {
+        name: "ROLE_USER",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -103,8 +101,8 @@ function initial() {
       });
 
       new Role({
-        name: "ROLE_MODERATOR"
-      }).save(err => {
+        name: "ROLE_MODERATOR",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -113,8 +111,8 @@ function initial() {
       });
 
       new Role({
-        name: "ROLE_ADMIN"
-      }).save(err => {
+        name: "ROLE_ADMIN",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -125,8 +123,6 @@ function initial() {
   });
 }
 
-
-
 function initialCategories() {
   Categorie.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
@@ -136,61 +132,59 @@ function initialCategories() {
         level: 1,
         color: "IMO",
         icon: "fas fa-home",
-        subcategories:
-          [
-            {
-              code: "LOC",
-              name: "Location",
-              color: "LOC",
-              icon: "fas fa-home",
-              level: 1
-            },
-            {
-              code: "VTI",
-              name: "Ventes immobilières",
-              color: "VTI",
-              icon: "fas fa-car",
-              level: 1
-            },
-            {
-              code: "BUC",
-              name: "Bureaux & Commerces",
-              color: "BUC",
-              icon: "fas fa-home",
-              level: 1
-            },
-            {
-              code: "COL",
-              name: "Colocation",
-              color: "COL",
-              icon: "fas fa-home",
-              level: 1
-            }
-          ],
-        types:
-          [
-            {
-              code: "MAI",
-              name: "Maison",
-              icon: 'house_icon'
-            },
-            {
-              code: "APA",
-              name: "Appartement",
-              icon: 'appart_icon'
-            },
-            {
-              code: "TER",
-              name: "Terrain",
-              icon: 'terrain_icon'
-            },
-            {
-              code: "AUT",
-              name: "Autre",
-              icon: 'autre_icon'
-            }
-          ]
-      }).save(err => {
+        subcategories: [
+          {
+            code: "LOC",
+            name: "Location",
+            color: "LOC",
+            icon: "fas fa-home",
+            level: 1,
+          },
+          {
+            code: "VTI",
+            name: "Ventes immobilières",
+            color: "VTI",
+            icon: "fas fa-car",
+            level: 1,
+          },
+          {
+            code: "BUC",
+            name: "Bureaux & Commerces",
+            color: "BUC",
+            icon: "fas fa-home",
+            level: 1,
+          },
+          {
+            code: "COL",
+            name: "Colocation",
+            color: "COL",
+            icon: "fas fa-home",
+            level: 1,
+          },
+        ],
+        types: [
+          {
+            code: "MAI",
+            name: "Maison",
+            icon: "house_icon",
+          },
+          {
+            code: "APA",
+            name: "Appartement",
+            icon: "appart_icon",
+          },
+          {
+            code: "TER",
+            name: "Terrain",
+            icon: "terrain_icon",
+          },
+          {
+            code: "AUT",
+            name: "Autre",
+            icon: "autre_icon",
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -204,53 +198,51 @@ function initialCategories() {
         level: 1,
         color: "VEH",
         icon: "fas fa-car",
-        subcategories:
-          [
-            {
-              code: "VOT",
-              name: "Voiture",
-              level: 1
-            },
-            {
-              code: "MOT",
-              name: "Motos",
-              level: 1
-            },
-            {
-              code: "EAU",
-              name: "Équipement auto",
-              level: 1
-            },
-            {
-              code: "EMO",
-              name: "Équipement moto",
-              level: 1
-            }
-          ],
-        types:
-          [
-            {
-              code: "VOI",
-              name: "Voiture",
-              icon: 'car_icon'
-            },
-            {
-              code: "MOS",
-              name: "Moto/Scooter",
-              icon: 'motos_icon'
-            },
-            {
-              code: "CAB",
-              name: "Camion/Bus",
-              icon: 'camion_icon'
-            },
-            {
-              code: "AUT",
-              name: "Autre",
-              icon: 'autre_icon'
-            }
-          ]
-      }).save(err => {
+        subcategories: [
+          {
+            code: "VOT",
+            name: "Voiture",
+            level: 1,
+          },
+          {
+            code: "MOT",
+            name: "Motos",
+            level: 1,
+          },
+          {
+            code: "EAU",
+            name: "Équipement auto",
+            level: 1,
+          },
+          {
+            code: "EMO",
+            name: "Équipement moto",
+            level: 1,
+          },
+        ],
+        types: [
+          {
+            code: "VOI",
+            name: "Voiture",
+            icon: "car_icon",
+          },
+          {
+            code: "MOS",
+            name: "Moto/Scooter",
+            icon: "motos_icon",
+          },
+          {
+            code: "CAB",
+            name: "Camion/Bus",
+            icon: "camion_icon",
+          },
+          {
+            code: "AUT",
+            name: "Autre",
+            icon: "autre_icon",
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -264,35 +256,34 @@ function initialCategories() {
         level: 1,
         color: "MTM",
         icon: "fas fa-mobile-alt",
-        subcategories:
-          [
-            {
-              code: "TEL",
-              name: "Téléphonie",
-              level: 1
-            },
-            {
-              code: "PCO",
-              name: "Ordinateur & PC",
-              level: 1
-            },
-            {
-              code: "INF",
-              name: "Informatique",
-              level: 1
-            },
-            {
-              code: "IMS",
-              name: "Image & Son",
-              level: 1
-            },
-            {
-              code: "CJV",
-              name: "Consoles & Jeux vidéo",
-              level: 2
-            }
-          ]
-      }).save(err => {
+        subcategories: [
+          {
+            code: "TEL",
+            name: "Téléphonie",
+            level: 1,
+          },
+          {
+            code: "PCO",
+            name: "Ordinateur & PC",
+            level: 1,
+          },
+          {
+            code: "INF",
+            name: "Informatique",
+            level: 1,
+          },
+          {
+            code: "IMS",
+            name: "Image & Son",
+            level: 1,
+          },
+          {
+            code: "CJV",
+            name: "Consoles & Jeux vidéo",
+            level: 2,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -310,17 +301,16 @@ function initialCategories() {
           {
             code: "OEM",
             name: "Offres d'emploi",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
         console.log("added 'Emploi' to categories collection");
       });
-
 
       new Categorie({
         code: "SVC",
@@ -332,15 +322,15 @@ function initialCategories() {
           {
             code: "PRS",
             name: "Prestations de services",
-            level: 1
+            level: 1,
           },
           {
             code: "CPA",
             name: "Cours particuliers",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -358,22 +348,21 @@ function initialCategories() {
           {
             code: "VLG",
             name: "Locations & Gîtes",
-            level: 1
+            level: 1,
           },
           {
             code: "VCH",
             name: "Chambres d'hôtes",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
         console.log("added 'Vacances' to categories collection");
       });
-
 
       new Categorie({
         code: "MAS",
@@ -385,25 +374,25 @@ function initialCategories() {
           {
             code: "AME",
             name: "Ameublement",
-            level: 1
+            level: 1,
           },
           {
             code: "EME",
             name: "Électroménager",
-            level: 1
+            level: 1,
           },
           {
             code: "DEC",
             name: "Décoration",
-            level: 1
+            level: 1,
           },
           {
             code: "BRI",
             name: "Bricolage",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -421,32 +410,31 @@ function initialCategories() {
           {
             code: "VET",
             name: "Vêtements",
-            level: 1
+            level: 1,
           },
           {
             code: "CHA",
             name: "Chaussures",
-            level: 1
+            level: 1,
           },
           {
             code: "MTB",
             name: "Montres & Bijoux",
-            level: 1
+            level: 1,
           },
           {
             code: "ACB",
             name: "Accessoires & Bagagerie",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
         console.log("added 'Mode' to categories collection");
       });
-
 
       new Categorie({
         code: "LOS",
@@ -458,30 +446,30 @@ function initialCategories() {
           {
             code: "SPH",
             name: "Sports & Hobbies",
-            level: 1
+            level: 1,
           },
           {
             code: "INM",
             name: "Instruments de musique",
-            level: 1
+            level: 1,
           },
           {
             code: "JJO",
             name: "Jeux & Jouets",
-            level: 1
+            level: 1,
           },
           {
             code: "LIV",
             name: "Livres",
-            level: 1
+            level: 1,
           },
           {
             code: "CD",
             name: "CD / DVD",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -499,10 +487,10 @@ function initialCategories() {
           {
             code: "AUT",
             name: "Autres",
-            level: 1
-          }
-        ]
-      }).save(err => {
+            level: 1,
+          },
+        ],
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -513,23 +501,20 @@ function initialCategories() {
   });
 }
 
-
-
 function initialCountry() {
   Country.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
-      let rawdata = fs.readFileSync('datas/datasCountry.json');
+      let rawdata = fs.readFileSync("datas/datasCountry.json");
       let countries = JSON.parse(rawdata);
       console.log(countries);
       //var datasCountry = JSON.parse(countries.data);
 
-      countries.forEach(country => {
-        new Country(country)
-          .save(err => {
-            if (err) {
-              console.log("error", err);
-            }
-          });
+      countries.forEach((country) => {
+        new Country(country).save((err) => {
+          if (err) {
+            console.log("error", err);
+          }
+        });
       });
     }
   });
@@ -538,18 +523,17 @@ function initialCountry() {
 function initialMarques() {
   Marque.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
-      let rawdata = fs.readFileSync('datas/datasvoituresmarques.json');
+      let rawdata = fs.readFileSync("datas/datasvoituresmarques.json");
       let marques = JSON.parse(rawdata);
       console.log(marques);
       //var datasCountry = JSON.parse(countries.data);
 
-      marques.forEach(marque => {
-        new Marque(marque)
-          .save(err => {
-            if (err) {
-              console.log("error", err);
-            }
-          });
+      marques.forEach((marque) => {
+        new Marque(marque).save((err) => {
+          if (err) {
+            console.log("error", err);
+          }
+        });
       });
     }
   });

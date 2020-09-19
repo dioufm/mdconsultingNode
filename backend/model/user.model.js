@@ -13,24 +13,26 @@ const User = mongoose.model(
     telwhatsapp: String,
     showTelWhatsapp: String,
     numberproduct: { type: Number, default: 0 },
-    origineConnexion: { type: String, default: 'SITE' },
+    numberproductachat: { type: Number, default: 0 },
+    credit: { type: Number, default: 0 },
+    countnewMessage: { type: Number, default: 0 },
+    origineConnexion: { type: String, default: "SITE" },
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
+        ref: "Role",
+      },
     ],
     dateCreation: { type: Date, default: Date.now },
     lastConnexionDate: { type: Date, default: Date.now },
-    cgu: { type: String, default: '1' },
-    photo:
-    {
+    cgu: { type: String, default: "1" },
+    photo: {
       size: { type: Number },
       filename: { type: String },
       data: { type: Buffer },
       contentType: { type: String },
-      imageUrl: { type: String }
-    }
+      imageUrl: { type: String },
+    },
   })
 );
 

@@ -16,6 +16,8 @@ db.product = require("./product.model");
 
 db.marque = require("./marque.model");
 
+db.message = require("./message.model");
+
 db.ROLES = ["user", "admin", "moderator"];
 
 

@@ -177,7 +177,7 @@
 
                 <!-- Dasboard-->
 
-                <div class="row" *ngIf="isShowDashboard">
+                <div class="row" *ngIf="isShowDashboard && user != null">
 
                   <div class="card col-md-6 text-white">
                     <div class="card-body">
@@ -212,7 +212,10 @@
                     <div class="card-body">
                       <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Crédit
                         <button type="button" class="btn">
-                          <h3><span class="badge badge-default">{{user.credit}}</span></h3>
+                          <span class="heading-title text-default mb-0">
+                            {{ user.credit | currency: "XOF":"symbol":"1.0-0":"fr" }}
+                          </span>
+                          
                         </button>
                       </h3>
                       <a [routerLink]="['/user','credits']">
@@ -281,12 +284,76 @@
                   </div>
                 </div>
 
+                <div class="row" *ngIf="isShowMessages">
+                  <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                      <thead>
+                        <th>Date</th>
+                        <th>De </th>
+                        <th>A </th>
+                        <th>Message </th>
+                        <th>Produit </th>
+                        <th> </th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let message of messages">
+                          <td class="mailbox-name">{{message.dateCreation | date: "dd/MM/yyyy HH:mm:ss"}}</td>
+                          <td class="mailbox-subject">{{message.userSender.username}}</td>
+                          <td class="mailbox-subject">{{message.userReceiver.username}}</td>
+                          <td class="mailbox-subject">{{message.message}}</td>
+                          
+                          <td class="mailbox-name"><a [routerLink]="['/product/',message.productId]">{{message.product.productname}}</a></td>
+                          <td *ngIf="message.sent == 1" class="mailbox-subject">Envoyé</td>
+                          <td *ngIf="message.sent == 0" class="mailbox-subject"> <a (click)="startAnswerMessageProduct(message)" data-tip="Voir"><i class="fa fa-reply-all" aria-hidden="true">Répondre</i></a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="span3" *ngIf="ifSendMessageAnswer">
+                      <form
+                        class="contact100-form validate-form"
+                        [formGroup]="answerMessageForm"
+                        (ngSubmit)="sendAnswerMessage()"
+                      >
+                        <div
+                          class="wrap-input100 validate-input bg0 rs1-alert-validate"
+                        >
+                          <span class="label-input100">Description de l'annonce *</span>
+                          <div
+                            *ngIf="answerMessageForm.controls['message'].errors"
+                            class="text-danger"
+                          >
+                            obligatoire
+                          </div>
+                          <textarea
+                            class="form-control"
+                            name="message"
+                            formControlName="message"
+                            rows="10"
+                            cols="33"
+                            placeholder="Bonjour, ce bien est-il toujours disponible..."
+                          ></textarea>
+                        </div>
+                      </form>
+                      <br />
+                      <button
+                        type="button"
+                        class="btn btn-default btn-block"
+                        (click)="sendAnswerMessage()"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                      >
+                        <i class="fa fa-envelope" aria-hidden="true"></i> Envoyer
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- End Navbar -->
-</body>
+    <!-- End Navbar -->
