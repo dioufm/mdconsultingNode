@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AddStudentComponent } from "./components/add-student/add-student.component";
-import { EditStudentComponent } from "./components/edit-student/edit-student.component";
 import { StudentsListComponent } from "./components/students-list/students-list.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -49,10 +47,6 @@ const routes: Routes = [
   },
 
   { path: "type/:type", component: SearchProductCategorieComponent },
-
-  { path: "add-student", component: AddStudentComponent },
-  { path: "edit-student/:id", component: EditStudentComponent },
-  { path: "students-list", component: StudentsListComponent },
 ];
 
 @NgModule({
