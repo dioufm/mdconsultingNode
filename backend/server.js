@@ -18,7 +18,7 @@ const MongoGridFSStore = require("mongo-gridfs-storage");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8082",
+  origin: "http://172.30.218.52:8080",
 };
 
 app.use(cors(corsOptions));
