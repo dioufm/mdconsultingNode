@@ -42,12 +42,6 @@ import { FileSelectDirective } from "ng2-file-upload";
 
 import { MatIconModule } from "@angular/material/icon";
 
-import { SocialLoginModule } from "angularx-social-login";
-import {
-  AuthServiceConfig,
-  GoogleLoginProvider,
-  FacebookLoginProvider,
-} from "angularx-social-login";
 import { ViewProductComponent } from "./components/home/view-product/view-product.component";
 
 import { GalleryModule } from "ng-gallery";
@@ -86,22 +80,6 @@ import { SearchProductCategorieComponent } from "./components/home/search-produc
 import { ProductResultComponent } from "./components/product/productresult/productresult.component";
 
 registerLocaleData(localeFr, "fr", localeFrExtra);
-
-const CONFIG = new AuthServiceConfig([
-  /*
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('815952117538-290ne08t0phn8tj95l1n6p0eptncht0p.apps.googleusercontent.com')
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('840919589761249')
-  }*/
-]);
-
-export function provideConfig() {
-  return CONFIG;
-}
 
 @NgModule({
   declarations: [
@@ -152,7 +130,6 @@ export function provideConfig() {
     MatTabsModule,
     MatGridListModule,
     ModalModule.forRoot(),
-    SocialLoginModule,
     GalleryModule,
     LightboxModule,
     ToastrModule.forRoot(), // ToastrModule added
@@ -168,10 +145,6 @@ export function provideConfig() {
     { provide: ApiService },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig,
-    },
     BsModalService,
     BsModalRef,
   ],
