@@ -2,7 +2,7 @@
   "name": "angular8-meanstack-backend",
   "version": "1.0.0",
   "description": "An angular 8 mean stack crud web app with angular material 7.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
