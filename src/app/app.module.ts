@@ -39,8 +39,6 @@ import {
 } from "ngx-bootstrap";
 import { FileSelectDirective } from "ng2-file-upload";
 
-import { MatIconModule } from "@angular/material/icon";
-
 import { ViewProductComponent } from "./components/home/view-product/view-product.component";
 
 import { GalleryModule } from "ng-gallery";
