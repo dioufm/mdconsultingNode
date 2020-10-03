@@ -14,16 +14,21 @@
     </div>
     <div class="page-header container">
       <div class="container">
-
-        <search-product-header [categorie]="categorie" [searchCriteria]="searchCriteria" [searchResult]="searchResult"
-          (notifySearchResult)='OnNotifySearchResult($event)'></search-product-header>
+        <search-product-header
+          [searchCriteria]="searchCriteria"
+          [searchResult]="searchResult"
+          (notifySearchResult)="OnNotifySearchResult($event)"
+        ></search-product-header>
 
         <div class="row col-md-12 col-lg-12 col-sm-12">
           <div class="col-lg-3 col-md-3 col-sm-6">
-            <search-product-aside *ngIf="searchResult != null" [categorie]="categorie" [searchCriteria]="searchCriteria"
-              [searchResult]="searchResult" (notifySearchResult)='OnNotifySearchResult($event)'></search-product-aside>
+            <search-product-aside
+              *ngIf="searchResult != null"
+              [searchCriteria]="searchCriteria"
+              [searchResult]="searchResult"
+              (notifySearchResult)="OnNotifySearchResult($event)"
+            ></search-product-aside>
           </div>
-
 
           <!-- results products-->
           <div class="col-lg-9 col-md-9 col-sm-6">

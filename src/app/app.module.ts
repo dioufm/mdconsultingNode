@@ -4,7 +4,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 /* Angular 8 components */
-import { StudentsListComponent } from "./components/students-list/students-list.component";
 
 /* Angular material */
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";

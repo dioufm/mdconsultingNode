@@ -104,4 +104,9 @@ export class UserInfosComponent implements OnInit {
         );
     }
   }
+
+  removeProduct(productId) {
+    if (confirm("etes vous sur de supprimer cette annonce ?")) {
+    }
+  }
 }
